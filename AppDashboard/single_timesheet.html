@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+	<meta name="robots" content="noindex, nofollow">
+	<title id="title">3SD Solutions || Single TimeSheet</title>
+	<link rel="shortcut icon" type="image/x-icon" href="static/assets/img/favicon.png">
+	<link rel="stylesheet" href="static/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="static/assets/css/font-awesome.min.css">
+	<link rel="stylesheet" href="static/assets/css/line-awesome.min.css">
+	<link rel="stylesheet" href="static/assets/css/dataTables.bootstrap4.min.css">
+	<link rel="stylesheet" href="static/assets/css/buttons.dataTables.min.css">
+	<link rel="stylesheet" href="static/assets/css/select2.min.css">
+	<link rel="stylesheet" href="static/assets/css/bootstrap-datetimepicker.min.css">
+	<link rel="stylesheet" href="static/assets/css/style.css">
+	<link rel="stylesheet" href="static/assets/css/general.css">
+	<link rel="stylesheet" href="static/assets/css/jquery.loading-indicator.css">
+	<script src="static/assets/js/jquery-3.2.1.min.js"></script>
+	<script src="static/assets/js/papaparse.min.js"></script>
+	<style>
+		.timeline-left:before {
+			left: 30px;
+		}
+
+		.breadcrumb {
+			background-color: #f7f7f7;
+		}
+
+		.btn {
+			margin-top: 7px;
+		}
+	</style>
+</head>
+
+<body class="mini-sidebar" style="visibility: visible;">
+	<div id="loader" class="center">Loading...</div>
+	<div class="main-wrapper">
+		<div class="header">
+			<div class="header-left">
+				<a id="toggle_btn" href="javascript:void(0);">
+					<span class="bar-icon">
+						<span></span>
+						<span></span>
+						<span></span></span></a>
+			</div>
+			<div class="page-title-box">
+				<a href="dashboard.html" class="logo"><img src="static/assets/img/logo-transparent.png" style="width: 117px;
+margin-top: -42px;" alt="3SD Solutions" style="margin-top: -30px;width: 93px;"></a>
+			</div>
+			<a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
+			<ul class="nav user-menu">
+				<li class="nav-item dropdown has-arrow main-drop">
+					<a href="javascript:void(0);" class="dropdown-toggle nav-link" data-toggle="dropdown">
+						<span class="user-img" id="proImage"></span>
+						<span id="companyName"></span>
+					</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="profile.html"><i class="ti-user"></i> My Profile</a>
+						<a class="dropdown-item" href="change_password.html"><i class="ti-settings"></i> Change
+							Password</a>
+						<a class="dropdown-item" href="logout.html"><i class="fa fa-power-off"></i> Logout</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="sidebar" id="sidebar">
+			<div class="sidebar-inner slimscroll">
+				<div id="sidebar-menu" class="sidebar-menu">
+					<nav class="sidebar-nav">
+						<ul id="sidebarnav">
+							<li class="menu-title">
+								<div class="user-pic" id="AdminImg" style="display: none;"></div>
+							</li>
+							<li class="menu-title">
+								<span id="absS"></span>
+							</li>
+							<li class="sidebar-item">
+								<a class="sidebar-link waves-effect waves-dark sidebar-link" href="dashboard.html"
+									aria-expanded="false"><i class="icon-Home"></i><span
+										class="hide-menu">Dashboard</span></a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+		<div class="page-wrapper">
+			<div class="page-breadcrumb">
+				<div class="row">
+					<div class="col-6 text-left">
+						<nav aria-label="breadcrumb">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"> <a href="all_active_list.html" id="allActivity">All
+										Activity List</a>
+								</li>
+								<li class="breadcrumb-item active" aria-current="page" id="singleTimesheetTitle">Time
+									Seen Details</li>
+							</ol>
+						</nav>
+					</div>
+					<div class="col-6"></div>
+					<div class="col-6 text-left">
+						<h4 class="page-title"><span>&nbsp;</span> Time Seen Details</h4>
+						<div class="d-flex align-items-center"></div>
+					</div>
+				</div>
+			</div>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<div class="row">
+							<div class="col-md-12">
+								<div role="alert" style="margin-top:5px;" id="messageId"></div>
+							</div>
+							<div class="col-md-12">
+								<div class="alert alert-danger alert-dismissible fade show msg_box col-12" role="alert"
+									style="margin-top:5px;    display: none;" id="selectImageError"><span
+										id="selectImages">Please select images.</span>
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close"
+										onclick="selectImgClose();"> <span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="bg-light p-15 d-flex align-items-center do-block">
+									<div class="btn-group m-t-5 m-b-5">
+										<button type="button" class="btn btn-primary btn-sm"> <i
+												class="fa fa-user m-r-10"></i><span id="buttonId">Time seen Details Of
+												:</span>
+										</button>
+									</div>
+									<div class="btn-group m-t-5 m-b-5 ml-4">
+										<form name="searchfrm" class="form-inline" method="post">
+											<div class="form-group">
+												<label class="" for="inlineFormInput" id="fromLabel">From</label>
+												<input type="date" class="form-control mx-sm-3" name="setDate"
+													id="inlineFormInput" placeholder="From Date">
+											</div>
+											<div class="form-group">
+												<label class="" for="inlineFormInput" id="toLabel">To</label>
+												<input type="date" class="form-control mx-sm-3" name="setDate"
+													id="inlineToInput" placeholder="To Date">
+											</div>
+											<div class="col-auto">
+												<input type="button" name="datesubmit" id="modalBtn"
+													class="btn btn-success btn-sm" value="Submit">
+											</div>
+										</form>
+									</div>
+									<div class="ml-auto">
+										<div class="btn-group m-r-10" role="group"
+											aria-label="Button group with nested dropdown">
+											<button type="button" class="btn btn-outline-secondary font-18" title="Move"
+												onClick="multiMoveModalOpen();"><i class="fa fa-reply"></i>
+											</button>
+											<button type="button" class="btn btn-outline-secondary font-18"
+												title="Delete" onClick="multiDelete();"><i class="fa fa-trash"></i>
+											</button>
+										</div>
+										<!-- Modal Start By Milan: 13-03-2020 -->
+										<div id="verticalcenter" class="modal fade show" tabindex="-1" role="dialog"
+											aria-labelledby="vcenter" aria-hidden="true">
+											<div class="modal-dialog modal-dialog-centered">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h4 class="modal-title moveData" id="vcenter">Move Data Set</h4>
+														<button type="button" class="close" data-dismiss="modal"
+															aria-hidden="true" onclick="closeBtn();">×</button>
+													</div>
+													<div class="modal-body">
+														<div class="modal-body">
+															<form name="from_move_data" id="from_move_data"
+																method="POST">
+																<div class="row">
+																	<div class="col-9">
+																		<select
+																			class="demoInputBox select2 form-control custom-select"
+																			name="category-color" name="emp_move_id"
+																			id="emp_move_id"
+																			style="width: 100%;"></select>
+																		<input type="hidden" id="location_id">
+																	</div>
+																	<div class="col-3"></div>
+																</div>
+															</form>
+														</div>
+													</div>
+													<div class="modal-footer">
+														<button type="button"
+															class="btn btn-success waves-effect waves-light"
+															onClick="multiMoveEmployeeImage();"><i
+																class="fa fa-check"></i> <span id="saveBtn">Save</span>
+														</button>
+														<div class="spinner-border text-success" role="status"
+															id="move_image_upload_loader_bar" style="display:none;">
+															<span class="sr-only" id="loader">Loading...</span>
+														</div>
+														<span class="text-success" id="move_image_upload_loader_bar_msg"
+															style="display:none;">Upload Completed.</span>
+														<input type="hidden" name="all_image_id" id="all_image_id"
+															value="">
+														<button type="button" class="btn btn-danger waves-effect"
+															data-dismiss="modal" id="btnClose"
+															onclick="closeBtn();">Close</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										<!-- Modal End By Milan: 13-03-2020 -->
+										<!-- Reg Modal Start By Milan: 13-03-2020 -->
+										<div id="registationmodal" class="modal fade show" tabindex="-1" role="dialog"
+											aria-labelledby="vcenter" aria-hidden="true">
+											<form action="" name="form_employee" id="form_employee" method="POST"
+												onSubmit="return validateAddEmployee();">
+												<div class="modal-dialog modal-dialog-centered">
+													<div class="modal-content">
+														<div class="modal-header">
+															<h4 class="modal-title registrationTitle" id="vcenter">
+																Registation</h4>
+															<button type="button" class="close" data-dismiss="modal"
+																aria-hidden="true">×</button>
+														</div>
+														<div class="modal-body">
+															<div class="modal-body">
+																<div class="form-group">
+																	<label for="recipient-name" class="control-label"
+																		id="emp-id">Employee ID:</label>
+																	<input type="text" class="form-control"
+																		id="employeeid" name="employeeid"
+																		placeholder="Enter Employee ID" value="">
+																</div>
+																<div class="form-group">
+																	<label for="recipient-name" class="control-label"
+																		id="empName">Name:</label>
+																	<input type="text" class="form-control"
+																		id="employeename" name="employeename" value=""
+																		placeholder="Enter Name">
+																</div>
+																<div class="form-group">
+																	<label for="recipient-name" class="control-label"
+																		id="empEmailId">Email ID:</label>
+																	<input type="text" class="form-control"
+																		id="employeeemailid" name="employeeemailid"
+																		value="" placeholder="Enter Email ID">
+																</div>
+																<div class="form-group">
+																	<label for="recipient-name" class="control-label"
+																		id="empPhone">Phone No:</label>
+																	<input type="text" class="form-control"
+																		id="employeephoneno" name="employeephoneno"
+																		value="" placeholder="Enter Phone No">
+																</div>
+															</div>
+														</div>
+														<div class="modal-footer">
+															<div class="spinner-border text-success" role="status"
+																id="create_employee_upload_loader_bar"
+																style="display:none;"> <span class="sr-only"
+																	id="loader">Loading...</span>
+															</div>
+															<span class="text-success"
+																id="create_employee_upload_loader_bar_msg"
+																style="display:none;">Employee added
+																Successfully.</span>
+															<button type="submit"
+																class="btn btn-success waves-effect waves-light"
+																onClick="createNewEmployee();"><i
+																	class="fa fa-check"></i> <span
+																	id="saveBtn">Save</span>
+															</button>
+															<input type="hidden" name="all_image_id" id="all_image_id"
+																value="">
+															<button type="button" class="btn btn-danger waves-effect"
+																data-dismiss="modal" id="btnClose">Close</button>
+														</div>
+													</div>
+												</div>
+											</form>
+										</div>
+										<!-- Reg Modal End By Sushil: 13-03-2020 -->
+										<div class="btn-group m-r-10" role="group"
+											aria-label="Button group with nested dropdown">
+											<div class="btn-group" role="group">
+												<div class="dropdown-menu" aria-labelledby="btnGroupDrop1"> <a
+														class="dropdown-item" href="javascript:void(0)"
+														id="presentEmpTraining">Present Employee Training</a>
+													<a class="dropdown-item" href="javascript:void(0)"
+														id="allEmpTraining">All Employee Training</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<ul class="timeline timeline-left" style="max-width:100;" id="displayDateWiseData"></ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="chat-windows"></div>
+	<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title"><i class="fa fa-clock"></i> &nbsp;<span id="timeTitle"></span></h5>
+					<button type="button" class="close" data-dismiss="modal"><span
+							aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				</div>
+				<div class="modal-body">
+					<img src="" id="imagepreview" style="width:765px; height: 464px;">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer class="footer text-center"> <span id="absFooter"> © 2020. 3SD Solutions Pvt. Ltd. All right reserved </span>
+		<a href="https://3sdsolutions.com/" target="_blank">3SD Solutions Pvt</a>.
+	</footer>
+	<script src="public/js/sidebar_menu.js"></script>
+	<script src="public/js/single_timesheet.js"></script>
+	<script src="static/assets/js/general.js"></script>
+	<script src="static/assets/js/popper.min.js"></script>
+	<script src="static/assets/js/bootstrap.min.js"></script>
+	<script src="static/assets/js/jquery.slimscroll.min.js"></script>
+	<script src="static/assets/js/select2.min.js"></script>
+	<script src="static/assets/js/select2.init.js"></script>
+	<script src="static/assets/js/moment.min.js"></script>
+	<script src="static/assets/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="static/assets/js/jquery.dataTables.min.js"></script>
+	<script src="static/assets/js/dataTables.bootstrap4.min.js"></script>
+	<script src="static/assets/js/dataTables/dataTables.buttons.min.js"></script>
+	<script src="static/assets/js/dataTables/buttons.flash.min.js"></script>
+	<script src="static/assets/js/dataTables/jszip.min.js"></script>
+	<script src="static/assets/js/dataTables/pdfmake.min.js"></script>
+	<script src="static/assets/js/dataTables/vfs_fonts.js"></script>
+	<script src="static/assets/js/dataTables/buttons.html5.min.js"></script>
+	<script src="static/assets/js/dataTables/buttons.print.min.js"></script>
+	<script src="static/assets/js/dataTables/dataTables.fixedColumns.min.js"></script>
+	<script src="static/assets/js/app.js"></script>
+	<!--Extra End -->
+</body>
+
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="robots" content="noindex, nofollow">
+    <title id="title">3SD Solutions || Shift Mapping</title>
+    <link rel="shortcut icon" type="image/x-icon" href="static/assets/img/favicon.png">
+    <link rel="stylesheet" href="static/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="static/assets/css/line-awesome.min.css">
+    <link rel="stylesheet" href="static/assets/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="static/assets/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="static/assets/css/select2.min.css">
+    <link rel="stylesheet" href="static/assets/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="static/assets/css/style.css">
+    <link rel="stylesheet" href="static/assets/css/general.css">
+    <link rel="stylesheet" href="static/assets/css/jquery.loading-indicator.css">
+    <script src="static/assets/js/jquery-3.2.1.min.js"></script>
+    <script src="static/assets/js/papaparse.min.js"></script>
+    <style>
+        .breadcrumb {
+            background-color: #f7f7f7;
+        }
+
+        .btn {
+            margin-top: 7px;
+        }
+
+        .has-error .select2-selection {
+            border-color: red !important;
+        }
+    </style>
+</head>
+
+<body class="mini-sidebar" style="visibility: visible;">
+    <div id="loader" class="center"></div>
+    <div class="main-wrapper">
+        <div class="header">
+            <div class="header-left">
+                <a id="toggle_btn" href="javascript:void(0);">
+                    <span class="bar-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span></span></a>
+            </div>
+            <div class="page-title-box">
+                <a href="dashboard.html" class="logo"><img src="static/assets/img/logo-transparent.png" style="width: 117px;
+margin-top: -42px;" alt="3SD Solutions" style="margin-top: -30px;width: 93px;"></a>
+            </div>
+            <a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
+            <ul class="nav user-menu">
+                <li class="nav-item dropdown has-arrow main-drop">
+                    <a href="javascript:void(0);" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                        <span class="user-img" id="proImage"></span>
+                        <span id="companyName"></span>
+                        <span id="companyEmail"></span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="profile.html"><i class="ti-user"></i> My Profile</a>
+                        <a class="dropdown-item" href="change_password.html"><i class="ti-settings"></i> Change
+                            Password</a>
+                        <a class="dropdown-item" href="logout.html"><i class="fa fa-power-off"></i> Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-inner slimscroll">
+                <div id="sidebar-menu" class="sidebar-menu">
+                    <nav class="sidebar-nav">
+                        <ul id="sidebarnav">
+                            <li class="menu-title">
+                                <div class="user-pic" id="AdminImg" style="display: none;"></div>
+                            </li>
+                            <li class="menu-title">
+                                <span id="absS"></span>
+                            </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="dashboard.html"
+                                    aria-expanded="false"><i class="icon-Home"></i><span
+                                        class="hide-menu">Dashboard</span></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a href="shift.html" id="emp">Shift</a>
+                                    </li>
+                                    <li class="breadcrumb-item active" aria-current="page" id="emplist">Employee Shift
+                                        List</li>
+                                </ol>
+                            </nav>
+                        </div>
+                        <div class="col-auto float-right ml-auto">
+                            <button type="button" class="btn add-btn ml-2" data-toggle="modal" data-target="#myModal"
+                                id="assignNewShift" onclick="assignNewShift();"><i class="fa fa-plus"></i><span
+                                    id="aShift"> Assign New Shift</span></button>
+                            <a href="searchshiftmapping.html" id="SearchempShift" class="btn add-btn" tabindex="0"
+                                aria-controls="file_export"><i class="fa fa-list"></i><span id="aShift"> Employee Shift
+                                    History</span></a>
+                        </div>
+                    </div>
+                </div>
+                <form method="post" action="" id="date-filter">
+                    <div class="row text-center">
+                        <div class="col-lg-5 col-md-6"></div>
+                        <div class="col-lg-2 col-md-6">
+                            <div class="month-filter"> <span id="calendar">
+                                    <input class="form-control mb-4" type="date" name="setDate" id="setdate"
+                                        placeholder="Enter Date" required /></div>
+                        </div>
+                        <div class="col-lg-5 col-md-6"></div>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div role="alert" style="margin-top:5px;" id="messageId">
+                                    <button type="button" class="close" data-dismiss="alert"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="table-responsive" id="tableData"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Add Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Assign New Shift</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="col-12 col-pad-0">
+                    <div class="alert alert-danger alert-dismissible fade show msg_box align-self-center" role="alert"
+                        style="display:none;" id="show_error1"><button type="button" class="close" data-dismiss="alert"
+                            aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group" id="empListLocSelect">
+                                        <label for="location">Location</label>
+                                        <select name="location_id" id="empListLoc"
+                                            class="demoInputBox select2 form-control custom-select"
+                                            style="width: 100%;border: 0px solid black;"
+                                            onchange="empchoose();"></select>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group" id="shiftListSelect">
+                                        <label for="inputEmail3">Shift</label>
+                                        <select name="shift_id" id="shiftList"
+                                            class="demoInputBox select2 form-control custom-select"
+                                            style="width: 100%;">
+                                            <option id="Sshift"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group" id="empListSelect">
+                                        <label for="inputEmail3">Employee</label>
+                                        <select att-name="emp_id[]" id="empList"
+                                            class="demoInputBox select2 form-control custom-select" style="width: 100%;"
+                                            multiple>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-6"></div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="inputShiftStart">Shift StartDate</label>
+                                        <input type="date" name="from_date" class="form-control" id="shiftStart" />
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="inputShiftEnd">Shift EndDate</label>
+                                        <input type="date" name="to_date" class="form-control" id="shiftEnd" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group text-center">
+                                <button type="button" class="btn btn-success waves-effect waves-light"
+                                    name="submit_emp_shift" id="btnSubmit" onclick="submitBtn();">Submit</button>
+                                <a href="empshiftmapping.html" class="btn btn-danger" id="cancel">Cancel</a>
+                                <button type="reset" class="btn btn-dark waves-effect waves-light"
+                                    id="reset">Reset</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Edit Modal-->
+    <div class="modal fade" id="editMyModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Assigned Shift</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="col-12 col-pad-0">
+                    <div class="alert alert-danger alert-dismissible fade show msg_box align-self-center" role="alert"
+                        style="display:none;" id="show_error2"><button type="button" class="close" data-dismiss="alert"
+                            aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="inputEmail3">Employee</label>
+                                        <select att-name="emp_id[]" id="empList2"
+                                            class="demoInputBox select2 form-control custom-select" style="width: 100%;"
+                                            disabled></select>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="shiftEntry">Shift</label>
+                                        <select name="shift_id2" id="shiftList2"
+                                            class="demoInputBox select2 form-control custom-select"
+                                            style="width: 100%;"></select>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="assignDate">Assign Date</label>
+                                        <input type="date" name="assign_Date" class="form-control" id="assign_Date" />
+                                        <input type="hidden" id="regEId" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group text-center">
+                                <button type="button" class="btn btn-success waves-effect waves-light"
+                                    name="update_emp_shift" id="btnUpdate" onclick="updateBtn();">Update</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer text-center"> <span id="absFooter"> © 2020. 3SD Solutions Pvt. Ltd. All right reserved</span>
+        <a href="https://3sdsolutions.com/" target="_blank">3SD Solutions Pvt</a>.
+    </footer>
+    <script src="public/js/sidebar_menu.js"></script>
+    <script src="public/js/empshiftmapping.js"></script>
+    <script src="static/assets/js/general.js"></script>
+    <script src="static/assets/js/popper.min.js"></script>
+    <script src="static/assets/js/bootstrap.min.js"></script>
+    <script src="static/assets/js/jquery.slimscroll.min.js"></script>
+    <script src="static/assets/js/select2.min.js"></script>
+    <script src="static/assets/js/select2.init.js"></script>
+    <script src="static/assets/js/moment.min.js"></script>
+    <script src="static/assets/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="static/assets/js/jquery.dataTables.min.js"></script>
+    <script src="static/assets/js/dataTables.bootstrap4.min.js"></script>
+    <script src="static/assets/js/dataTables/dataTables.buttons.min.js"></script>
+    <script src="static/assets/js/dataTables/buttons.flash.min.js"></script>
+    <script src="static/assets/js/dataTables/jszip.min.js"></script>
+    <script src="static/assets/js/dataTables/pdfmake.min.js"></script>
+    <script src="static/assets/js/dataTables/vfs_fonts.js"></script>
+    <script src="static/assets/js/dataTables/buttons.html5.min.js"></script>
+    <script src="static/assets/js/dataTables/buttons.print.min.js"></script>
+    <script src="static/assets/js/dataTables/dataTables.fixedColumns.min.js"></script>
+    <script src="static/assets/js/app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="robots" content="noindex, nofollow">
+    <title id="title">3SD Solutions || Shift</title>
+    <link rel="shortcut icon" type="image/x-icon" href="static/assets/img/favicon.png">
+    <link rel="stylesheet" href="static/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="static/assets/css/line-awesome.min.css">
+    <link rel="stylesheet" href="static/assets/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="static/assets/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="static/assets/css/select2.min.css">
+    <link rel="stylesheet" href="static/assets/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="static/assets/css/style.css">
+    <link rel="stylesheet" href="static/assets/css/general.css">
+    <link rel="stylesheet" href="static/assets/css/jquery.loading-indicator.css">
+    <script src="static/assets/js/jquery-3.2.1.min.js"></script>
+    <script src="static/assets/js/papaparse.min.js"></script>
+</head>
+
+<body class="mini-sidebar" style="visibility: visible;">
+    <div id="loader" class="center"></div>
+    <div class="main-wrapper">
+        <div class="header">
+            <div class="header-left">
+                <a id="toggle_btn" href="javascript:void(0);">
+                    <span class="bar-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span></span></a>
+            </div>
+            <div class="page-title-box">
+                <a href="dashboard.html" class="logo"><img src="static/assets/img/logo-transparent.png" style="width: 117px;
+margin-top: -42px;" alt="3SD Solutions" style="margin-top: -30px;width: 93px;"></a>
+            </div>
+            <a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
+            <ul class="nav user-menu">
+                <li class="nav-item dropdown has-arrow main-drop">
+                    <a href="javascript:void(0);" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                        <span class="user-img" id="proImage"></span>
+                        <span id="companyName"></span>
+                        <span id="companyEmail"></span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="profile.html"><i class="ti-user"></i> My Profile</a>
+                        <a class="dropdown-item" href="change_password.html"><i class="ti-settings"></i> Change
+                            Password</a>
+                        <a class="dropdown-item" href="logout.html"><i class="fa fa-power-off"></i> Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-inner slimscroll">
+                <div id="sidebar-menu" class="sidebar-menu">
+                    <nav class="sidebar-nav">
+                        <ul id="sidebarnav">
+                            <li class="menu-title">
+                                <div class="user-pic" id="AdminImg" style="display: none;"></div>
+                            </li>
+                            <li class="menu-title">
+                                <span id="absS"></span>
+                            </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="dashboard.html"
+                                    aria-expanded="false"><i class="icon-Home"></i><span
+                                        class="hide-menu">Dashboard</span></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="shift.html" id="shift">Shift</a></li>
+                                <li class="breadcrumb-item active" aria-current="page" id="adWk">Add Weekend</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="page-title text-center"><span id="weekset">Weekend Setting</span> : <span
+                                        id="headerData"></span></h4>
+                                <div role="alert" style="margin-top:5px;" id="messageId">
+                                    <button type="button" class="close" data-dismiss="alert"
+                                        aria-label="Close"></button>
+                                </div>
+                            </div>
+                            <form class="form-horizontal r-separator" action="" name="add_user_form" id="add_user_form"
+                                method="POST">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-lg-10">
+                                            <div class="form-group row align-items-center m-b-3">
+                                                <label for="inputLocation"
+                                                    class="col-4 text-right control-label col-form-label"
+                                                    id="weekLoc">Weekend Location</label>
+                                                <div class="col-8">
+                                                    <select name="location_id" id="locationList"
+                                                        class="select2 form-control" style="width: 100%;">
+                                                        <option value="" id="loc">--Select Location--</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-lg-10">
+                                            <div class="form-group row align-items-center m-b-3">
+                                                <label for="inputShift"
+                                                    class="col-4 text-right control-label col-form-label"
+                                                    id="weekShift">Shift</label>
+                                                <div class="col-8">
+                                                    <select name="shift_id" id="shiftList" class="select2 form-control"
+                                                        style="width: 100%;" disabled>
+                                                        <option id="Sshift"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-lg-10">
+                                            <div class="form-group row align-items-center m-b-3">
+                                                <label for="inputShiftStart"
+                                                    class="col-4 text-right control-label col-form-label"
+                                                    id="sStart">Shift Start</label>
+                                                <div class="col-8">
+                                                    <input type="time" name="shift_start"
+                                                        class="col-4 text-center control-label col-form-label" disabled>
+                                                    <label for="inputShiftEnd"
+                                                        class="col-3 text-right control-label col-form-label"
+                                                        id="sEnd">Shift End</label>
+                                                    <input type="time" name="shift_end"
+                                                        class="col-4 text-center control-label col-form-label" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row border-bottom">
+                                        <div class="col-sm-12 col-lg-10">
+                                            <div class="form-group row align-items-center m-b-3">
+                                                <label for="inputShiftMargin"
+                                                    class="col-4 text-right control-label col-form-label"
+                                                    id="sMargin">Shift Margin</label>
+                                                <div class="col-8">
+                                                    <input type="time" name="shift_margin"
+                                                        class="col-4 text-center control-label col-form-label" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-lg-10">
+                                            <div class="form-group row align-items-center m-b-0">
+                                                <label for="inputUsername"
+                                                    class="col-4 text-right control-label col-form-label"
+                                                    id="sDef">Weekend Definition</label>
+                                                <div class="col-8 border-left p-t-0 p-b-0">
+                                                    <div class="row border-bottom">
+                                                        <div class="col-sm-12 col-lg-12">
+                                                            <div class="form-group row align-items-center m-b-0">
+                                                                <label for="inputUsername"
+                                                                    class="col-4 text-center control-label col-form-label"
+                                                                    id="sDay">DAYS</label>
+                                                                <div class="col-8 border-left p-t-0 p-b-0">
+                                                                    <div class="row border-bottom">
+                                                                        <div class="col-sm-12 col-lg-12">
+                                                                            <div
+                                                                                class="form-group row align-items-center m-b-0">
+                                                                                <label for="inputUsername"
+                                                                                    class="col-12 text-center control-label col-form-label border-right"
+                                                                                    id="weeks">WEEKS</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row ">
+                                                                        <div class="col-sm-12 col-lg-12">
+                                                                            <div
+                                                                                class="form-group row align-items-center m-b-0">
+                                                                                <label for="inputUsername"
+                                                                                    class="col-2 text-center control-label col-form-label border-right"
+                                                                                    id="all">ALL</label>
+                                                                                <label for="inputUsername"
+                                                                                    class="col-2 text-center control-label col-form-label border-right"
+                                                                                    id="first">1st</label>
+                                                                                <label for="inputUsername"
+                                                                                    class="col-2 text-center control-label col-form-label border-right"
+                                                                                    id="second">2nd</label>
+                                                                                <label for="inputUsername"
+                                                                                    class="col-2 text-center control-label col-form-label border-right"
+                                                                                    id="third">3rd</label>
+                                                                                <label for="inputUsername"
+                                                                                    class="col-2 text-center control-label col-form-label border-right"
+                                                                                    id="fourth">4th</label>
+                                                                                <label for="inputUsername"
+                                                                                    class="col-2 text-center control-label col-form-label border-right"
+                                                                                    id="fif">5th</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row border-bottom">
+                                                        <div class="col-sm-12 col-lg-12">
+                                                            <div class="form-group row align-items-center m-b-0">
+                                                                <label for="inputUsername"
+                                                                    class="col-4 text-center control-label col-form-label"
+                                                                    id="sun">SUNDAY</label>
+                                                                <div
+                                                                    class="col-8 border-left p-t-10 p-b-10 border-right">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12 col-lg-12">
+                                                                            <div
+                                                                                class="form-group row align-items-center m-b-1 ">
+                                                                                <input type="checkbox" name="Sun_all"
+                                                                                    id="SunAll"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Sun1"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Sun2"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Sun3"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Sun4"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Sun5"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row border-bottom">
+                                                        <div class="col-sm-12 col-lg-12">
+                                                            <div class="form-group row align-items-center m-b-0">
+                                                                <label for="inputUsername"
+                                                                    class="col-4 text-center control-label col-form-label"
+                                                                    id="mon">MONDAY</label>
+                                                                <div
+                                                                    class="col-8 border-left p-t-10 p-b-10 border-right">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12 col-lg-12">
+                                                                            <div
+                                                                                class="form-group row align-items-center m-b-1">
+                                                                                <input type="checkbox" name="Mon_all"
+                                                                                    id="MonAll"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Mon1"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Mon2"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Mon3"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Mon4"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Mon5"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row border-bottom">
+                                                        <div class="col-sm-12 col-lg-12">
+                                                            <div class="form-group row align-items-center m-b-0">
+                                                                <label for="inputUsername"
+                                                                    class="col-4 text-center control-label col-form-label"
+                                                                    id="tus">TUESDAY</label>
+                                                                <div
+                                                                    class="col-8 border-left p-t-10 p-b-10 border-right">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12 col-lg-12">
+                                                                            <div
+                                                                                class="form-group row align-items-center m-b-1">
+                                                                                <input type="checkbox" name="Tue_all"
+                                                                                    id="TueAll"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Tue1"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Tue2"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Tue3"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Tue4"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Tue5"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row border-bottom">
+                                                        <div class="col-sm-12 col-lg-12">
+                                                            <div class="form-group row align-items-center m-b-0">
+                                                                <label for="inputUsername"
+                                                                    class="col-4 text-center control-label col-form-label"
+                                                                    id="wed">WEDNESDAY</label>
+                                                                <div
+                                                                    class="col-8 border-left p-t-10 p-b-10 border-right">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12 col-lg-12">
+                                                                            <div
+                                                                                class="form-group row align-items-center m-b-1">
+                                                                                <input type="checkbox" name="Wed_all"
+                                                                                    id="WedAll"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Wed1"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Wed2"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Wed3"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Wed4"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Wed5"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row border-bottom">
+                                                        <div class="col-sm-12 col-lg-12">
+                                                            <div class="form-group row align-items-center m-b-0">
+                                                                <label for="inputUsername"
+                                                                    class="col-4 text-center control-label col-form-label"
+                                                                    id="thurs">THURSDAY</label>
+                                                                <div
+                                                                    class="col-8 border-left p-t-10 p-b-10 border-right">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12 col-lg-12">
+                                                                            <div
+                                                                                class="form-group row align-items-center m-b-1">
+                                                                                <input type="checkbox" name="Thu_all"
+                                                                                    id="ThuAll"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Thu1"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Thu2"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Thu3"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Thu4"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Thu5"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row border-bottom">
+                                                        <div class="col-sm-12 col-lg-12">
+                                                            <div class="form-group row align-items-center m-b-0">
+                                                                <label for="inputUsername"
+                                                                    class="col-4 text-center control-label col-form-label"
+                                                                    id="fri">FRIDAY</label>
+                                                                <div
+                                                                    class="col-8 border-left p-t-10 p-b-10 border-right">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12 col-lg-12">
+                                                                            <div
+                                                                                class="form-group row align-items-center m-b-1">
+                                                                                <input type="checkbox" name="Fri_all"
+                                                                                    id="FriAll"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Fri1"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Fri2"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Fri3"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Fri4"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Fri5"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row border-bottom">
+                                                        <div class="col-sm-12 col-lg-12">
+                                                            <div class="form-group row align-items-center m-b-0">
+                                                                <label for="inputUsername"
+                                                                    class="col-4 text-center control-label col-form-label"
+                                                                    id="sat">SATURDAY</label>
+                                                                <div
+                                                                    class="col-8 border-left p-t-10 p-b-10 border-right">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12 col-lg-12">
+                                                                            <div
+                                                                                class="form-group row align-items-center m-b-1">
+                                                                                <input type="checkbox" name="Sat_all"
+                                                                                    id="SatAll"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Sat1"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Sat2"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Sat3"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Sat4"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                                <input type="checkbox" name="Sat5"
+                                                                                    class="col-2 text-center control-label col-form-label">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group m-b-0 text-center">
+                                        <input type="hidden" value="" name="edited_id" id="edited_id">
+                                        <button type="button" class="btn btn-success waves-effect waves-light"
+                                            name="submit_user" id="save" onclick="saveWeekEnd();">Save</button> <a
+                                            href="weekend.html" class="btn btn-danger" id="cancel">Cancel</a>
+                                        <button type="reset" class="btn btn-dark waves-effect waves-light"
+                                            id="reset">Reset</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer text-center" id="absFooter">
+        © 2020. 3SD Solutions Pvt. Ltd. All right reserved
+        <a href="https://3sdsolutions.com/" target="_blank">3SD Solutions Pvt</a>.
+    </footer>
+    <script src="static/assets/js/select2.min.js"></script>
+    <script src="public/js/sidebar_menu.js"></script>
+    <script src="public/js/weekend.js"></script>
+    <script src="static/assets/js/general.js"></script>
+    <script src="static/assets/js/popper.min.js"></script>
+    <script src="static/assets/js/bootstrap.min.js"></script>
+    <script src="static/assets/js/jquery.slimscroll.min.js"></script>
+    <script src="static/assets/js/moment.min.js"></script>
+    <script src="static/assets/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="static/assets/js/jquery.dataTables.min.js"></script>
+    <script src="static/assets/js/dataTables.bootstrap4.min.js"></script>
+    <script src="static/assets/js/dataTables/dataTables.buttons.min.js"></script>
+    <script src="static/assets/js/dataTables/buttons.flash.min.js"></script>
+    <script src="static/assets/js/dataTables/jszip.min.js"></script>
+    <script src="static/assets/js/dataTables/pdfmake.min.js"></script>
+    <script src="static/assets/js/dataTables/vfs_fonts.js"></script>
+    <script src="static/assets/js/dataTables/buttons.html5.min.js"></script>
+    <script src="static/assets/js/dataTables/buttons.print.min.js"></script>
+    <script src="static/assets/js/dataTables/dataTables.fixedColumns.min.js"></script>
+    <script src="static/assets/js/app.js"></script>
+</body>
+
+</html>

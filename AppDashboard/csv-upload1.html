@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+	<meta name="robots" content="noindex, nofollow">
+	<title id="title">3SD Solutions || CSV Upload For Employee</title>
+	<!-- Favicon -->
+	<link rel="shortcut icon" type="image/x-icon" href="static/assets/img/favicon.png">
+	<link rel="stylesheet" href="static/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="static/assets/css/font-awesome.min.css">
+	<link rel="stylesheet" href="static/assets/css/line-awesome.min.css">
+	<link rel="stylesheet" href="static/assets/css/dataTables.bootstrap4.min.css">
+	<link rel="stylesheet" href="static/assets/css/buttons.dataTables.min.css">
+	<link rel="stylesheet" href="static/assets/css/select2.min.css">
+	<link rel="stylesheet" href="static/assets/css/bootstrap-datetimepicker.min.css">
+	<link rel="stylesheet" href="static/assets/css/style.css">
+	<link rel="stylesheet" href="static/assets/css/general.css">
+	<link rel="stylesheet" href="static/assets/css/jquery.loading-indicator.css">
+	<script src="static/assets/js/jquery-3.2.1.min.js"></script>
+	<script src="static/assets/js/papaparse.min.js"></script>
+	<!--<script src="static/assets/js/jquery.loading-indicator.js"></script>-->
+</head>
+
+<body class="mini-sidebar" style="visibility: visible;">
+	<div id="loader" class="center"></div>
+	<!-- Main Wrapper -->
+	<!-- Main Wrapper -->
+	<div class="main-wrapper">
+		<!-- Header -->
+		<div class="header">
+			<!-- Logo -->
+			<div class="header-left">
+
+				<a id="toggle_btn" href="javascript:void(0);">
+					<span class="bar-icon">
+						<span></span>
+						<span></span>
+						<span></span>
+					</span>
+				</a>
+				<!--<img src="static/assets/img/logo.png" width="40" height="40" alt="">-->
+
+			</div>
+			<div class="page-title-box">
+				<a href="dashboard.html" class="logo"><img src="static/assets/img/logo-transparent.png" style="width: 117px;
+margin-top: -42px;" alt="3SD Solutions" style="margin-top: -30px;width: 93px;" width="140px"></a>
+			</div>
+			<!-- /Logo -->
+
+
+
+			<!-- Header Title -->
+			<!-- <div class="page-title-box"> -->
+			<!-- <h3><img src="static/assets/img/logo-transparent.png"  style="width: 117px;
+margin-top: -42px;" alt="3SD Solutions" style="margin-top: -30px;width: 93px;"  width="140px"></h3> -->
+			<!-- </div> -->
+			<!-- /Header Title -->
+
+			<a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
+
+			<!-- Header Menu -->
+			<ul class="nav user-menu">
+
+				<li class="nav-item dropdown has-arrow main-drop">
+					<a href="javascript:void(0);" class="dropdown-toggle nav-link" data-toggle="dropdown">
+						<span class="user-img"><img src="static/assets/img/1user.png" alt=""></span>
+						<span id="companyName"></span>
+					</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="javascript:void(0);" id="companyMail"></a>
+						<!-- <a class="dropdown-item" href="profile.html" id="profile">Profile</a>
+							<a class="dropdown-item" href="change_password.html" id="pswd">Profile</a> -->
+						<a class="dropdown-item" href="logout.html" id="logout">Logout</a>
+					</div>
+				</li>
+			</ul>
+			<!-- /Header Menu -->
+
+			<!-- Mobile Menu -->
+			<div class="dropdown mobile-user-menu">
+				<a href="javascript:void(0);" class="nav-link dropdown-toggle" data-toggle="dropdown"
+					aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+				<div class="dropdown-menu dropdown-menu-right">
+					<a class="dropdown-item" href="javascript:void(0);" id="companyMail"></a>
+					<!-- <a class="dropdown-item" href="profile.html" id="profile">Profile</a>
+						<a class="dropdown-item" href="change_password.html" id="pswd">Profile</a> -->
+					<a class="dropdown-item" href="logout.html" id="logout">Logout</a>
+				</div>
+			</div>
+			<!-- /Mobile Menu -->
+
+		</div>
+		<!-- /Header -->
+
+		<!-- Sidebar -->
+		<div class="sidebar" id="sidebar">
+			<div class="sidebar-inner slimscroll">
+				<div id="sidebar-menu" class="sidebar-menu">
+					<ul id="sidebarnav">
+						<li class="menu-title">
+							<span id="absS">3SD Solutions Pvt</span>
+						</li>
+						<li><a href="dashboard.html"><i class="la la-dashboard"></i><span id="dashboard">
+									Dashboard</span></a></li>
+
+						<li><a href="employee.html"><i class="la la-user"></i> <span> Employee</span></a></li>
+						<li class="submenu">
+							<a href="javascript:void(0);"><i class="la la-file"></i> <span> Reports</span> <span
+									class="menu-arrow"></span></a>
+							<ul style="display: none;">
+								<li><a href="all-active-list.html">All Activity</a></li>
+								<li><a href="daily-report.html">Daily Activity</a></li>
+								<li><a href="user-report.html">User Repoert</a></li>
+								<li><a href="vms.html">Visitor</a></li>
+							</ul>
+						</li>
+						<li class="submenu">
+							<a href="javascript:void(0);"><i class="la la-cog"></i> <span> Settings</span> <span
+									class="menu-arrow"></span></a>
+							<ul style="display: none;">
+								<li><a href="secretkey.html">Camera</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- /Sidebar -->
+		<!-- Page Wrapper -->
+		<div class="page-wrapper">
+			<!-- Page Content -->
+			<div class="content container-fluid">
+				<!-- Page Header -->
+				<div class="page-header">
+					<div class="row align-items-center">
+						<div class="col">
+							<ul class="breadcrumb">
+								<li class="breadcrumb-item"><a href="javascript:void(0);" id="Emp"></a></li>
+								<li class="breadcrumb-item active" id="csvUploadBred"></li>
+							</ul>
+						</div>
+						<div class="col-auto float-right ml-auto">
+
+							<button type="button" class=" buttons-copy buttons-html5 btn btn-primary mr-1 mb-2"
+								id="csvFileUploadBtn" data-toggle="modal" data-target="#myModal" tabindex="0"
+								title="Upload CSV File" aria-controls="file_export"><i class="fa fa-upload"></i><span
+									id="csvFile">CSV UPLOAD</span></button>
+
+							<a href="javascript:void(0);" class="buttons-copy buttons-html5 btn btn-danger mr-1 mb-2"
+								id="backBtn" title="Back"><i class="fa fa-arrow-left"></i><span
+									id="backLbl">Back</span></a>
+
+						</div>
+					</div>
+				</div>
+				<!-- /Page Header -->
+				<div class="row" style="display:none;" id="empRespList">
+					<div class="col-md-12">
+						<div class="card mb-0">
+							<div class="card-body">
+								<div role="alert" style="margin-top:5px;" id="messageId">
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									</button>
+								</div>
+								<div class="table-responsive" id="listdata">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row" style="display:none;" id="susscessempRespList">
+					<div class="col-md-12">
+						<div class="card mb-0">
+							<div class="card-body">
+								<div role="alert" style="margin-top:5px;" id="messageId">
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									</button>
+								</div>
+								<div class="table-responsive" id="succlistdata">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row" style="display:none;" id="csvFileUploadResultDetails">
+					<div class="card" style="width:100%;">
+						<div class="card-header" id="CSVFileUploadResult">
+						</div>
+						<div class="card-body">
+							<div class="col-md-12">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="alert alert-danger" role="alert" id="dontRefresh">
+											Page refresh is strictly restricted.
+										</div>
+									</div>
+									<div class="col-md-6 col-sm-6 col-lg-6 col-xl-4 text-info">
+										<div class="card dash-widget">
+											<div class="card-body">
+												<span class="dash-widget-icon"><i class="fa fa-user"></i></span>
+												<div class="dash-widget-info">
+													<h3 id="totalEmpVal"></h3>
+													<span id="totalEmpLbl"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6 col-sm-6 col-lg-6 col-xl-4 text-success">
+										<div class="card dash-widget">
+											<div class="card-body">
+												<span class="dash-widget-icon"><i class="fa fa-thumbs-o-up"></i></span>
+												<div class="dash-widget-info">
+													<h3 id="totalSuccessEmpVal" onclick="javascript:void(0);"></h3>
+													<a href="javascript:void(0);" id="empCsvSuccListLink"
+														onclick="javascript:void(0);" class="text-success"><i
+															class="fa fa-download"></i></a>
+													<span id="empCsvSuccListLbl"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6 col-sm-6 col-lg-6 col-xl-4 text-danger">
+										<div class="card dash-widget">
+											<div class="card-body">
+												<span class="dash-widget-icon"><i
+														class="fa fa-thumbs-o-down"></i></span>
+												<div class="dash-widget-info">
+													<h3 id="totalErrorEmpVal" onclick="javascript:void(0);"></h3>
+													<a href="javascript:void(0);" id="empCsvErrListLink"
+														onclick="javascript:void(0);" class="text-danger"><i
+															class="fa fa-download"></i></a>
+													<span id="empCsvErrListLbl"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- <div class="row" style="display:none;" id="csvFileUploadResultDetails"> -->
+				<!-- <div class="card"> -->
+				<!-- <div class="card-body"> -->
+				<!-- <h5 class="card-title" id="CSVFileUploadResult">CSV File Upload Result :</h5> -->
+				<!-- <p class="card-text text-danger" id="dontRefresh">Do not refresh your page.</p> -->
+				<!-- </div> -->
+
+				<!-- <ul class="list-group list-group-flush"> -->
+
+				<!-- <li class="list-group-item text-info"><i class="fa fa-user"></i>&nbsp;&nbsp;<span id="totalEmpLbl"></span><span id="totalEmpVal"></span></li> -->
+
+				<!-- <li class="list-group-item text-success"><a href="javascript:void(0);" id="empCsvSuccListLink" onclick="javascript:void(0);" class="text-success"><i class="fa fa-download"></i></a></li> -->
+
+				<!-- <li class="list-group-item text-danger"><a href="javascript:void(0);" id="empCsvErrListLink" onclick="javascript:void(0);" class="text-danger" title="Download Error Employee List"><i class="fa fa-download"></i>&nbsp;&nbsp;<span id="empCsvErrListLbl"></span><span id="totalErrorEmpVal"></span></li> -->
+
+				<!-- </ul> -->
+
+				<!-- </div> -->
+				<!-- </div> -->
+			</div>
+
+			<!-- Modal for CSV File-->
+			<div class="modal fade" id="importCSVFile" role="dialog">
+				<form method="post" enctype="multipart/form-data" action="">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<a href="static/employee_registration.csv" class="fa fa-download"><span
+										style="font-family: Poppins, sans-serif; font-size:18px" id="downloadCSV">
+										&nbsp; &nbsp; Download Sample CSV </span></a>
+								<button type="button" class="close" data-dismiss="modal">×</button>
+							</div>
+							<div class="modal-body">
+								<div class="card">
+									<div class="card-body">
+										<div class="alert alert-danger" role="alert" id="show_error"
+											style="display:none;">
+										</div>
+										<div align="center">
+											<div class="input-group" style="margin:20px 0 15px 0;">
+												<div class="input-group-prepend">
+													<span class="input-group-text" id="UploadCSV"> Upload</span>
+												</div>
+												<div class="custom-file">
+													<input type="file" class="custom-file-input" id="inputGroupFile01"
+														name="csv_file">
+													<label class="custom-file-label" for="inputGroupFile01"
+														id="CCSVFile"> Choose CSV file...</label>
+												</div>
+											</div>
+											<button type="button" onclick="csvuploads();"
+												class="btn btn-success waves-effect waves-light"
+												id="csvUpload"></button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<script>
+				document.title = "3SD Solutions || CSV Upload For Employee";
+				var companyNameData = localStorage.getItem('OrganizationName');
+				var projectPath = localStorage.getItem('projectPath');
+				OrganizationEmailId = localStorage.getItem("OrganizationEmailId"),
+					OrganizationPassword = localStorage.getItem("OrganizationPassword"),
+					UserType = localStorage.getItem("UserType"),
+					$('#backBtn').attr('href', projectPath + 'employee.html');
+				var message = localStorage.getItem('message');
+				var baseURL = localStorage.getItem("baseURL");
+				var prefix = sessionStorage.getItem("prefix");
+				var langName = localStorage.getItem("sitelang");
+				var BaseLocationId = '1';
+				var AccessToken = localStorage.getItem("AccessToken");
+				var LicKey = localStorage.getItem('LicKey');
+				var EmpIdUser = localStorage.getItem('EmpId');
+				document.getElementById("companyMail").innerHTML = OrganizationEmailId;
+				document.getElementById("companyName").innerHTML = companyNameData;
+				var message = localStorage.getItem('message');
+				var category = localStorage.getItem('category');
+				if (message != null) {
+					if (category == 1)
+						$("#messageId").attr('class', 'alert alert-success text-left')
+					else
+						$("#messageId").attr('class', 'alert alert-danger text-left')
+					$("#messageId").show().text(message);
+					setTimeout(function () {
+						$("#messageId").hide();
+					}, 4000);
+					localStorage.removeItem('message');
+					localStorage.removeItem('category');
+				}
+				if (AccessToken == '' || AccessToken == null || AccessToken == 'undefined') {
+					window.location.href = projectPath;
+				}
+				function csvuploads() {
+					var endpoint = "employee-bulk-upload";
+					var requesturlcsvFile = baseURL + prefix + endpoint;
+
+					var fileUpload = $('input[name=csv_file]')[0].files[0];
+					if (fileUpload === undefined || fileUpload == null) {
+						document.getElementById("CCSVFile").style.border = "1px solid red";
+						return false;
+					} else {
+						var BaseLoc = 1;
+						var form = new FormData();
+						form.append("file", fileUpload);
+						form.append("BaseLocationId", BaseLoc);
+						/*for (var key of form_data.entries()) {
+							console.log(key[0] + ', ' + key[1]);
+						}
+						return false;*/
+						var settings = {
+							"async": true,
+							"crossDomain": true,
+							"url": requesturlcsvFile,
+							"method": "POST",
+							"headers": {
+								"AccessToken": AccessToken,
+								"LicKey": LicKey,
+							},
+							"processData": false,
+							"contentType": false,
+							"mimeType": "multipart/form-data",
+							"data": form
+						}
+						$.ajax(settings).done(function (response) {
+							var data = JSON.parse(response);
+							console.log(response);
+							$("#show_error").hide();
+			< !-- if (data.errorNo != '0') -->
+			< !--{						 -->
+				< !--$("#show_error").html(data['message']); -->
+				< !--$("#show_error").show(); -->
+			< !-- } -- >
+			if (data.category == '0') {
+							$("#show_error").html(data['message']);
+							$("#show_error").show();
+						}
+						else {
+							console.log("Hi");
+							var tabledata = '';
+							var tabledata2 = '';
+							tabledata = '<table id="ErrorEmpList" class="table table-striped table-bordered display" style="border:1px solid black;"><thead><tr><th style="border:1px solid black;font-weight: bold;">Sl.no</th><th style="border:1px solid black;font-weight: bold;">EmpId</th><th style="border:1px solid black;font-weight: bold;">EmployeeName</th><th style="border:1px solid black;font-weight: bold;">EmailId</th><th style="border:1px solid black;font-weight: bold;">MobileNo</th></tr></thead><tbody>';
+							tabledata2 = '<table id="SuccessEmpList" class="table table-striped table-bordered display" style="border:1px solid black;"><thead><tr><th style="border:1px solid black;font-weight: bold;">Sl.no</th><th style="border:1px solid black;font-weight: bold;">EmpId</th><th style="border:1px solid black;font-weight: bold;">EmployeeName</th><th style="border:1px solid black;font-weight: bold;">EmailId</th><th style="border:1px solid black;font-weight: bold;">MobileNo</th></tr></thead><tbody>';
+							var errorData = data['errorData'];
+							var cntErrorDatalength = errorData.length;
+							var i = 0;
+							var slNo = 0;
+							if (cntErrorDatalength > 0) {
+								var td = '';
+								for (i = 0; i < cntErrorDatalength; i++) {
+									var slNo = i + 1;
+									var slNoTd = "<td style='border:1px solid black;'>" + slNo + "</td>";
+									errorcreatetr = '';
+									var messageCode = errorData[i]['message-code'];
+									var message = errorData[i]['message'];
+									cntMessageCode = messageCode.length;
+									if (messageCode.includes(2)) {
+										var colName = 'Employee ID';
+										var uniqueMasterId = '"' + colName + '","' + slNo + '"';
+										var indexOfMessageCode = messageCode.indexOf(2);
+										var messageText = message[indexOfMessageCode];
+										var errorEmployeeId = "<td style='border: 1px solid black;color: red;' title='" + messageText + "'>" + errorData[i]['EmpId'] + "</td>";
+									} else {
+										var errorEmployeeId = "<td style='border: 1px solid black;'>" + errorData[i]['EmpId'] + "</td>";
+									}
+
+									if (messageCode.includes(1) || messageCode.includes(4)) {
+										var colName = 'EmailId';
+										var uniqueMasterId = '"' + colName + '","' + slNo + '"';
+
+										if (messageCode.includes(1)) {
+											var indexOfMessageCode = messageCode.indexOf(1);
+											var messageText = message[indexOfMessageCode];
+											var errorMailId = "<td style='border: 1px solid black;color: red;' title='" + messageText + "'>" + errorData[i]['EmailId'] + "</td>";
+										} else {
+											if (messageCode.includes(4)) {
+												var indexOfMessageCode = messageCode.indexOf(4);
+												var messageText = message[indexOfMessageCode];
+												var errorMailId = "<td style='border: 1px solid black;color: red;' title='" + messageText + "'>" + errorData[i]['EmailId'] + "</td>";
+											} else {
+												var errorMailId = "<td style='border: 1px solid black;'>" + errorData[i]['EmailId'] + "</td>";
+											}
+										}
+									} else {
+										var errorMailId = "<td style='border: 1px solid black'>" + errorData[i]['EmailId'] + "</td>";
+									}
+									if (messageCode.includes(3)) {
+
+										var colName = 'MobileNo';
+										var uniqueMasterId = '"' + colName + '","' + slNo + '"';
+										var indexOfMessageCode = messageCode.indexOf(3);
+										var messageText = message[indexOfMessageCode];
+										var errorMobileNo = "<td style='border: 1px solid black;color: red;' title='" + messageText + "'>" + errorData[i]['MobileNo'] + "</td>";
+
+									} else {
+										var errorMobileNo = "<td style='border: 1px solid black;'>" + errorData[i]['MobileNo'] + "</td>";
+									}
+
+									var errorEmployeeName = "<td style='border: 1px solid black;'>" + errorData[i]['EmpName'] + "</td>";
+
+									var errorcreatetr = "<tr>" + slNoTd + errorEmployeeId + errorEmployeeName + errorMailId + errorMobileNo + "</tr>";
+
+									tabledata = tabledata + errorcreatetr;
+								}
+							}
+
+							var successData = data.successData;
+							var cntSuccessDatalength = successData.length;
+							if (cntSuccessDatalength > 0) {
+								var i;
+								var td = '';
+								for (i = 0; i < cntSuccessDatalength; i++) {
+									var slNo = slNo + i + 1;
+									successcreatetr = '';
+									var slNoTd = "<td style='border: 1px solid black;'>" + slNo + "</td>";
+									var successEmployeeId = "<td style='border: 1px solid black;'>" + successData[i]['EmpId'] + "</td>";
+									var successEmployeeName = "<td style='border: 1px solid black;'>" + successData[i]['EmpName'] + "</td>";
+									var successMailId = "<td style='border: 1px solid black;'>" + successData[i]['EmailId'] + "</td>";
+									var successMobileNo = "<td style='border: 1px solid black;'>" + successData[i]['MobileNo'] + "</td>";
+									var successcreatetr = "<tr style='color:green;'>" + slNoTd + successEmployeeId + successEmployeeName + successMailId + successMobileNo + "</tr>";
+									tabledata2 = tabledata2 + successcreatetr;
+								}
+							}
+
+							tabledata += '</tbody></table>';
+							tabledata2 += '</tbody></table>';
+							$("#listdata").html(tabledata);
+							$("#succlistdata").html(tabledata2);
+							datatableIntialise();
+							$("#importCSVFile").hide();
+							$("#totalEmpVal").html(data.totalEmp);
+							var totalSuccessEmp = data.totalSuccessEmp;
+							var totalErrorEmp = data.totalErrorEmp;
+							if (totalSuccessEmp > 0) {
+								$("#empCsvSuccListLink").attr("onclick", "CreateReport('SuccessEmpList','SuccessEmployeeList');");
+							}
+							if (totalErrorEmp > 0) {
+								$("#empCsvErrListLink").attr("onclick", "CreateReport('ErrorEmpList','ErrorEmployeeList');");
+							}
+							$("#totalSuccessEmpVal").html(data.totalSuccessEmp);
+							$("#totalErrorEmpVal").html(data.totalErrorEmp);
+							$("#csvFileUploadResultDetails").show();
+							$("#csvFileUploadBtn").hide();
+				
+				< !--$("#empCsvSuccListBtn").show(); -->
+				< !--$("#empCsvErrListBtn").show(); -->
+			}
+					});
+				}
+}
+				function datatableIntialise() {
+					var prevLabel = "Previous";
+					var nextLabel = "Next";
+					var searchLabel = "Search";
+					var excelLabel = "Excel";
+					var pdfLabel = "PDF";
+					var printLabel = "Print";
+					var datatableInfo = "Showing _START_ to _END_ of _TOTAL_ entries";
+					$('#example').DataTable({
+						dom: 'Bfrtip',
+						buttons: [
+							{ extend: 'excel', text: excelLabel },
+							{ extend: 'pdf', text: pdfLabel },
+							{ extend: 'print', text: printLabel }
+						],
+						lengthMenu: [[10, -1], [10, "All"]],
+						language: {
+							paginate: {
+								previous: prevLabel,
+								next: nextLabel
+							},
+							aria: {
+								paginate: {
+									previous: 'Previous',
+									next: 'Next'
+								}
+							},
+							search: searchLabel,
+							info: datatableInfo
+						}
+					});
+				}
+
+				$('body').on('click', '#csvFileUploadBtn', function () {
+					$('#importCSVFile').toggleClass('show');
+					$('#importCSVFile').css({ "display": "block", "padding-right": "17px" });
+				})
+				$('body').on('click', '.close', function () {
+					$('#importCSVFile').toggleClass('show');
+					$('#importCSVFile').css({ "display": "none" });
+				})
+				$('body').on('click', '#close', function () {
+					$('#importCSVFile').toggleClass('show');
+					$('#importCSVFile').css({ "display": "none" });
+				})
+
+				$('body').on('click', '#closeM', function () {
+					$('#importCSV').toggleClass('show');
+					$('#importCSV').css({ "display": "none" });
+				})
+				$(document).ready(function () {
+					$('#title').html('Airface ™ Enterprise || CSV Upload For Employee');
+					$('#absService').html('3SD Solutions Pvt');
+					$('#profile').html('My Profile');
+					$('#pswd').html('Change Password');
+					$('#logout').html('Logout');
+					$('#absS').html('3SD Solutions Pvt');
+					$('#dashboard').html('Dashboard');
+					$('#Service').html('3SD Solutions Pvt');
+					$('#absFooter').html('© 2020. 3SD Solutions Pvt. Ltd. All right reserved');
+					$('#deleteId').attr('title', 'Delete');
+					$('#editId').attr('title', 'Edit');
+					var prevLabel = "Previous";
+					var nextLabel = "Next";
+					var searchLabel = "Search";
+					var excelLabel = "excel";
+					var pdfLabel = "pdf";
+					var printLabel = "print";
+					var datatableInfo = "Showing _START_ to _END_ of _TOTAL_ entries";
+					$('#CSVFileUploadResult').html('CSV File Upload Result :');
+					$('#dontRefresh').html('Page refresh is strictly restricted.');
+					$('#totalEmpLbl').html('Total no of Employee');
+					$('#empCsvSuccListLbl').html('No of success Employee');
+					$('#empCsvErrListLbl').html('No of failure Employee');
+					$('#save').html('Save');
+					$('#cancel').html('Cancel');
+					$('#reset').html('Reset');
+					$('#Emp').html('Employee');
+					$('#csvUploadBred').html('CSV Upload');
+					$('#backLbl').html('Back');
+					$('#Dwnld').html('Download Sample CSV');
+					$('#upload').html('Upload');
+					$('#csvUpload').html('Upload');
+					$('#CCSVFile').html("Choose CSV file..");
+					$('#Sub').html('Upload');
+					$('#csvFile').html('CSV Upload');
+					$('#downloadCSV').html('Download Sample CSV');
+					$('#UploadCSV').html('Upload');
+					$('#csvFileUpload').html('Csv File Data');
+					$('#missingField').html('either duplicate data or missing any field.');
+					$('#nameCSV').html('Name');
+					$('#empIdCSV').html('DNI');
+					$('#mailCSV').html('Email ID');
+					$('#mobileCSV').html('Mobile No');
+				});
+
+			</script>
+		</div>
+		<!-- /Page Wrapper -->
+	</div>
+	<footer class="footer text-center" id="absFooter">
+		© 2020. 3SD Solutions Pvt. Ltd. All right reserved
+		<a href="https://3sdsolutions.com/" target="_blank">3SD Solutions Pvt</a>.
+	</footer>
+	<!-- /Attendance Modal -->
+	<script>
+		document.onreadystatechange = function () {
+			if (document.readyState !== "complete") {
+				document.querySelector(
+					"body").style.visibility = "hidden";
+				document.querySelector(
+					"#loader").style.visibility = "visible";
+			} else {
+				document.querySelector(
+					"#loader").style.display = "none";
+				document.querySelector(
+					"body").style.visibility = "visible";
+			}
+		}; 
+	</script>
+	<script>
+
+		function CreateReport(tableID, ReportName) {
+			var downloadLink;
+			var dataType = 'application/vnd.ms-excel';
+			var tableSelect = document.getElementById(tableID);
+			var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+			console.log(tableHTML);
+			ReportName = ReportName ? ReportName + '.xls' : '' + 'EmployeeName.xls';//modify excle sheet name here 
+			// Create download link element
+			downloadLink = document.createElement("a");
+			document.body.appendChild(downloadLink);
+
+			if (navigator.msSaveOrOpenBlob) {
+				var blob = new Blob(['\ufeff', tableHTML], {
+					type: dataType
+				});
+				navigator.msSaveOrOpenBlob(blob, ReportName);
+			} else {
+				// Create a link to the file
+				downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+
+				// Setting the file name
+				downloadLink.download = ReportName;
+
+				//triggering the function
+				downloadLink.click();
+			}
+		}
+
+	</script>
+	<script src="static/assets/js/general.js"></script>
+	<script src="static/assets/js/popper.min.js"></script>
+	<script src="static/assets/js/bootstrap.min.js"></script>
+	<script src="static/assets/js/jquery.slimscroll.min.js"></script>
+	<script src="static/assets/js/select2.min.js"></script>
+	<script src="static/assets/js/moment.min.js"></script>
+	<script src="static/assets/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="static/assets/js/jquery.dataTables.min.js"></script>
+	<script src="static/assets/js/dataTables.bootstrap4.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
+	<script src="https://cdn.datatables.net/fixedcolumns/3.2.6/js/dataTables.fixedColumns.min.js"></script>
+	<script src="static/assets/js/app.js"></script>
+</body>
+
+</html>

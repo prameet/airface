@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="robots" content="noindex, nofollow">
+    <title id="title">3SD Solutions || Monthly Report</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="static/assets/img/favicon.png">
+    <link rel="stylesheet" href="static/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="static/assets/css/line-awesome.min.css">
+    <link rel="stylesheet" href="static/assets/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="static/assets/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="static/assets/css/select2.min.css">
+    <link rel="stylesheet" href="static/assets/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="static/assets/css/style.css">
+    <link rel="stylesheet" href="static/assets/css/general.css">
+    <link rel="stylesheet" href="static/assets/css/jquery.loading-indicator.css">
+    <script src="static/assets/js/jquery-3.2.1.min.js"></script>
+    <script src="static/assets/js/papaparse.min.js"></script>
+    <style>
+        table.DTFC_Cloned thead,
+        table.DTFC_Cloned tfoot {
+            background-color: #FFF
+        }
+
+        div.DTFC_Blocker {
+            background-color: white
+        }
+
+        div.DTFC_LeftWrapper table.dataTable,
+        div.DTFC_RightWrapper table.dataTable {
+            margin-bottom: 0;
+            z-index: 999999999 !important;
+        }
+
+        div.DTFC_LeftWrapper table.dataTable.no-footer,
+        div.DTFC_RightWrapper table.dataTable.no-footer {
+            border-bottom: none
+        }
+
+        .DTFC_LeftBodyWrapper {
+            background-color: #fff !important;
+            margin-top: -14px !important;
+        }
+    </style>
+    <style>
+        #example_wrapper {
+            position: relative;
+            top: 10px;
+        }
+
+        .table-responsive {
+            overflow-x: inherit !important;
+        }
+
+        .table td {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .css-bar>i {
+            width: 70px;
+            height: 70px;
+            background: #fff;
+            line-height: 70px;
+            position: absolute;
+            border-radius: 100%;
+            text-align: center;
+            margin-left: 5px;
+            margin-top: 5px;
+            left: 0px;
+            right: 0px;
+            z-index: 2;
+            font-size: 27px;
+            color: #a6b7bf;
+        }
+
+        .css-bar {
+            position: relative;
+            display: inline-block;
+            border-radius: 50%;
+            background-color: transparent;
+            margin-bottom: 20px;
+            -webkit-box-sizing: content-box;
+            -moz-box-sizing: content-box;
+            box-sizing: content-box;
+            width: 80px;
+            height: 70px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body class="mini-sidebar" style="visibility: visible;">
+    <div id="loader" class="center"></div>
+    <div class="main-wrapper">
+        <div class="header">
+            <div class="header-left">
+                <a id="toggle_btn" href="javascript:void(0);">
+                    <span class="bar-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span></span></a>
+            </div>
+            <div class="page-title-box">
+                <a href="dashboard.html" class="logo"><img src="static/assets/img/logo-transparent.png" style="width: 117px;
+margin-top: -42px;" alt="3SD Solutions" style="margin-top: -30px;width: 93px;"></a>
+            </div>
+            <a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
+            <ul class="nav user-menu">
+                <li class="nav-item dropdown has-arrow main-drop">
+                    <a href="javascript:void(0);" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                        <span class="user-img" id="proImage"></span>
+                        <span id="companyName"></span>
+                        <span id="companyEmail"></span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="profile.html"><i class="ti-user"></i> My Profile</a>
+                        <a class="dropdown-item" href="change_password.html"><i class="ti-settings"></i> Change
+                            Password</a>
+                        <a class="dropdown-item" href="logout.html"><i class="fa fa-power-off"></i> Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-inner slimscroll">
+                <div id="sidebar-menu" class="sidebar-menu">
+                    <nav class="sidebar-nav">
+                        <ul id="sidebarnav">
+                            <li class="menu-title">
+                                <div class="user-pic" id="AdminImg" style="display: none;"></div>
+                            </li>
+                            <li class="menu-title">
+                                <span id="absS"></span>
+                            </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="dashboard.html"
+                                    aria-expanded="false"><i class="icon-Home"></i><span
+                                        class="hide-menu">Dashboard</span></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"> <a href="monthly_list.html">Reports</a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">Monthly Report</li>
+                            </ol>
+                        </div>
+                        <div class="col-auto float-right ml-auto">
+                            <ul class="nav nav-pills justify-content-end">
+                                <li class=" nav-item"> <a href="monthly_list.html" class="nav-link" id="dayTab">Day</a>
+                                </li>
+                                <li class="nav-item"> <a href="monthly_report.html" class="nav-link active"
+                                        id="hourTab">Hour</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <input type="hidden" name="sel_month" id="sel_month" value="">
+                                <input type="hidden" name="sel_year" id="sel_year" value="">
+                                <input type="hidden" name="sel_location" value="">
+                                <div class="tab-content br-n pn">
+                                    <div id="navpills2-1" class="tab-pane active">
+                                        <div class="row">
+                                            <form name="" id="frmFilterMonthAct" action="monthly_list.html"
+                                                method="post" style="width:100%">
+                                                <div class="row" style="padding-bottom: 20px;">
+                                                    <div class="col-3">
+                                                        <h4 class="page-title">Monthly Attendance</h4>
+                                                    </div>
+                                                    <div class="year-filter col-3">
+                                                        <select id="yearFilter" name="search_year"
+                                                            class="select2 form-control" style="width:100%"
+                                                            onChange="recordList(), changeMonth(this.value);"></select>
+                                                    </div>
+                                                    <div class="month-filter col-3">
+                                                        <select id="monthFilter" class="select2 form-control"
+                                                            style="width:100%" name="search_month"
+                                                            onChange="recordList();"></select>
+                                                    </div>
+                                                    <div class="location-filter col-3" id="location_select_div"
+                                                        style="display:none;">
+                                                        <select id="locationFilter" name="search_location"
+                                                            class="select2 form-control" style="width:90%"
+                                                            onChange="recordList();"></select>
+                                                    </div>
+                                                    <div class="year-filter co-4">
+                                                        <button id="loadingBtn" style="display:none;"
+                                                            class="btn btn-primary" type="button" disabled> <span
+                                                                class="spinner-border spinner-border-sm" role="status"
+                                                                aria-hidden="true"></span>
+                                                            <span class="sr-only">Loading...</span>
+                                                        </button> <span class="text-danger" id="error_show"
+                                                            style="display:none;"></span>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4" id="location_input_div"
+                                                        style="display:none;">
+                                                        <input type="hidden" name="locationFilter" id="locationFilter"
+                                                            value="0" />
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="table-responsive" id="list_data"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal custom-modal fade" id="attendance_info" role="dialog">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Attendance Info: <span id="emp-name"
+                                    style="font-weight:700;"></span></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span
+                                    aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer text-center"> <span id="absFooter">© 2020. 3SD Solutions Pvt. Ltd. All right reserved</span>
+        <a href="https://3sdsolutions.com/" target="_blank">3SD Solutions Pvt</a>.
+    </footer>
+    <script src="public/js/sidebar_menu.js"></script>
+    <script src="public/js/monthly_report.js"></script>
+    <script src="static/assets/css/c3/app.min.js"></script>
+    <script src="static/assets/css/c3/app.init.js"></script>
+    <script src="static/assets/css/c3/perfect-scrollbar.jquery.min.js"></script>
+    <script src="static/assets/js/general.js"></script>
+    <script src="static/assets/js/popper.min.js"></script>
+    <script src="static/assets/js/bootstrap.min.js"></script>
+    <script src="static/assets/js/jquery.slimscroll.min.js"></script>
+    <script src="static/assets/js/select2.min.js"></script>
+    <script src="static/assets/js/select2.init.js"></script>
+    <script src="static/assets/css/c3/d3.min.js"></script>
+    <script src="static/assets/css/c3/c3.min.js"></script>
+    <script src="static/assets/js/moment.min.js"></script>
+    <script src="static/assets/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="static/assets/js/jquery.dataTables.min.js"></script>
+    <script src="static/assets/js/dataTables.bootstrap4.min.js"></script>
+    <script src="static/assets/js/app.js"></script>
+    <!--Extra End -->
+</body>
+
+</html>

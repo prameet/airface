@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+	<meta name="robots" content="noindex, nofollow">
+	<title id="title">3SD Solutions || Login</title>
+	<link rel="shortcut icon" type="image/x-icon" href="static/assets/img/favicon.png">
+	<link rel="stylesheet" href="static/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="static/assets/css/font-awesome.min.css">
+	<link rel="stylesheet" href="static/assets/css/line-awesome.min.css">
+	<link rel="stylesheet" href="static/assets/css/select2.min.css">
+	<link rel="stylesheet" href="static/assets/css/bootstrap-datetimepicker.min.css">
+	<link rel="stylesheet" href="static/assets/css/style.css">
+	<script src="static/assets/js/jquery-3.2.1.min.js"></script>
+</head>
+
+<body class="account-page">
+	<div class="main-wrapper">
+		<div class="account-content">
+			<div class="container">
+				<div class="account-box">
+					<div class="account-wrapper">
+						<div class="account-logo">
+							<a href="https://3sdsolutions.com">
+								<img src="static/assets/img/Airis logo-1.png" alt="airface"></a>
+						</div>
+						<div id="successAlert" class="alert alert-success" role="alert" style="display:none;"></div>
+						<div id="errorAlert" class="alert alert-danger" role="alert" style="display:none;"></div>
+						<form name="login">
+							<div class="form-group">
+								<label id="enterEmail">Username :</label>
+								<input type="text" name="username" id="username" class="form-control"
+									placeholder="Enter Username" autocomplete="off" required>
+							</div>
+							<div class="form-group">
+								<label id="enterpassword">Password :</label>
+								<input type="password" name="password" id="password" class="form-control"
+									autocomplete="off" placeholder="Enter Password" required>
+							</div>
+							<span class="text-danger" id="pass_error" style="display:none;">Note: Password should
+								contain at least one number, one lowercase, one uppercase and special character.</span>
+							<input type="hidden" name="user_type" id="usertype"
+								class="form-control-sm form-check-inline" value="admin" required="">
+							<div class="form-group text-center">
+								<button type="button" class="btn btn-primary account-btn" onclick="authLogin();"
+									id="logInId">Log In</button>
+							</div>
+							<!--<div style="display:inline" class="form-group m-b-0 m-t-10">
+								<div class="col-sm-12 text-center">
+								   <b><span id="dataMsg">Don't have an account?</span></b><a href="registration.html" class="text-info m-l-5"><b><span id="SignupId">Start a free trial</b></a>
+								</div>
+							 </div>-->
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="public/js/index.js"></script>
+	<script src="static/assets/js/popper.min.js"></script>
+	<script src="static/assets/js/bootstrap.min.js"></script>
+	<script src="static/assets/js/jquery.slimscroll.min.js"></script>
+	<script src="static/assets/js/select2.min.js"></script>
+	<script src="static/assets/js/moment.min.js"></script>
+	<script src="static/assets/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="static/assets/js/app.js"></script>
+</body>
+
+</html>

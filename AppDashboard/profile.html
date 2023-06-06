@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="robots" content="noindex, nofollow">
+    <title id="title">3SD Solutions || Dashboard</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="static/assets/img/favicon.png">
+    <link rel="stylesheet" href="static/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="static/assets/css/line-awesome.min.css">
+    <link rel="stylesheet" href="static/assets/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="static/assets/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="static/assets/css/select2.min.css">
+    <link rel="stylesheet" href="static/assets/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="static/assets/css/style.css">
+    <link rel="stylesheet" href="static/assets/css/general.css">
+    <link rel="stylesheet" href="static/assets/css/jquery.loading-indicator.css">
+    <script src="static/assets/js/jquery-3.2.1.min.js"></script>
+    <script src="static/assets/js/papaparse.min.js"></script>
+</head>
+
+<body class="mini-sidebar" style="visibility: visible;">
+    <div id="loader" class="center"></div>
+    <div class="main-wrapper">
+        <div class="header">
+            <div class="header-left">
+                <a id="toggle_btn" href="javascript:void(0);">
+                    <span class="bar-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span></span></a>
+            </div>
+            <div class="page-title-box">
+                <a href="dashboard.html" class="logo"><img src="static/assets/img/logo-transparent.png" style="width: 117px;
+margin-top: -42px;" alt="3SD Solutions" style="margin-top: -30px;width: 93px;"></a>
+            </div>
+            <a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
+            <ul class="nav user-menu">
+                <li class="nav-item dropdown has-arrow main-drop">
+                    <a href="javascript:void(0);" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                        <span class="user-img" id="proImage"></span>
+                        <span id="companyName"></span>
+                        <span id="companyEmail"></span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="profile.html"><i class="ti-user"></i> My Profile</a>
+                        <a class="dropdown-item" href="change_password.html"><i class="ti-settings"></i> Change
+                            Password</a>
+                        <a class="dropdown-item" href="logout.html"><i class="fa fa-power-off"></i> Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-inner slimscroll">
+                <div id="sidebar-menu" class="sidebar-menu">
+                    <nav class="sidebar-nav">
+                        <ul id="sidebarnav">
+                            <li class="menu-title">
+                                <div class="user-pic" id="AdminImg" style="display: none;"></div>
+                            </li>
+                            <li class="menu-title">
+                                <span id="absS"></span>
+                            </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="dashboard.html"
+                                    aria-expanded="false"><i class="icon-Home"></i><span
+                                        class="hide-menu">Dashboard</span></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="page-wrapper">
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-5 align-self-center">
+                        <h4 class="page-title" id="pTitle"> Profile</h4>
+                        <div class="d-flex align-items-center">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="login_id" value="" />
+            <div class="container-fluid">
+                <div role="alert" style="margin-top:5px;" id="messageId"></div>
+                <div class="row">
+                    <!-- Column -->
+                    <div class="col-lg-4 col-xlg-3 col-md-5">
+                        <div class="card" style="min-height: 304px;">
+                            <div class="card-body">
+                                <center class="m-t-30">
+                                    <img id="compImg" width="200" />
+                                    <span id="headerData">
+                                        <h4 class="card-title m-t-10" id="h4Id"></h4>
+                                    </span>
+                                    <div class="row text-center justify-content-md-center">
+                                        <span onclick="return changecompimg();" title="No privilege to update"
+                                            id="compeditbtn"><i class="fa fa-edit"></i></span>
+                                        <div class="card-body" style="display:none;" id="compchgdiv">
+                                            <div class="row border-bottom">
+                                                <div class="col-sm-12 col-lg-12">
+                                                    <div class="form-group row align-items-center m-b-0">
+                                                        <div class="col-12 p-t-10 p-b-10">
+                                                            <input type="text" class="form-control" id="orgEditname"
+                                                                name="orgEditname" placeholder="" required>
+                                                        </div>
+                                                        <div class="col-9 p-t-10 p-b-10"
+                                                            style="font-size: 10px; display: inherit; color: #000;">
+                                                            <input type="file" class="form-control" id="compimg"
+                                                                name="compimg" onchange="uploadcompImg()"
+                                                                placeholder="No File Choosen" required>(max 500KB)
+                                                        </div>
+                                                        <div class="col-3 p-t-10 p-b-10">
+                                                            <button type="buttton"
+                                                                class="btn btn-success waves-effect waves-light"
+                                                                onclick="return uploadAdminCompImg();"
+                                                                name="submit_candidate" id="upUser">Update</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xlg-3 col-md-5">
+                        <div class="card" style="min-height: 304px;">
+                            <div class="card-body">
+                                <center class="m-t-30">
+                                    <small class="text-muted" id="EmailAddress">Email Address</small>
+                                    <h6 class="text-muted"><span id="visemail"></span>
+                                        <input type="email" pattern="[^ @]*@[^ @]*" name="prof_email" id="prof_email"
+                                            style="text-align:center" required class="form-control">
+                                    </h6>
+                                    <small class="text-muted p-t-30 db" id="Phone">Phone</small>
+                                    <h6 class="text-muted"><span id="vismob"></span>
+                                        <input type="text" name="prof_mob" value="" id="prof_mob"
+                                            style="text-align:center" required class="form-control">
+                                    </h6>
+                                    <br />
+                                    <span onclick="return profileUpdate();" title="No privilege to update"
+                                        id="btnEdit"><i class="fa fa-edit"></i></span>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <button name="btnCancel" style="display:none;" id="btnCancel"
+                                                onclick="return profileCancel();"
+                                                class="btn btn-danger waves-effect waves-light">Cancel</button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button name="btnUpdate" style="display:none;" id="btnUpdate"
+                                                onclick="return updateProfile();"
+                                                class="btn btn-success waves-effect waves-light">Update</button>
+                                        </div>
+                                    </div>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xlg-3 col-md-5">
+                        <div class="card" style="min-height: 304px;">
+                            <div class="card-body">
+                                <center class="m-t-30">
+                                    <!-- <img id="ProfileImg" class="rounded-circle" width="150" /> -->
+                                    <img id="ProfileImg" class="" width="150" />
+                                    <h6 class="card-subtitle m-t-10"><i class="fa fa-circle text-success m-r-10"
+                                            id="Online">Online</i><span onclick="return changeprofileimg();"
+                                            title="No privilege Granted" id="profileeditbtn"><i
+                                                class="fa fa-edit"></i></span></h6>
+                                    <div class="row text-center justify-content-md-center">
+                                        <div class="card-body" style="display:none;" id="profilechgdiv">
+                                            <div class="row border-bottom">
+                                                <div class="col-sm-12 col-lg-12">
+                                                    <div class="form-group row align-items-center m-b-0">
+                                                        <div class="col-9 p-t-10 p-b-10"
+                                                            style="font-size: 10px; display: inherit; color: #000;">
+                                                            <input type="file" class="form-control" id="profimg"
+                                                                name="profimg" placeholder="No file Choosen"
+                                                                onchange="blobProfileImg()" required>(max 500KB)
+                                                        </div>
+                                                        <div class="col-3 p-t-10 p-b-10">
+                                                            <button type="submit"
+                                                                class="btn btn-success waves-effect waves-light"
+                                                                onclick="return uploadProfileImg();"
+                                                                name="submit_candidate" id="pUpdate">Upload</button>
+                                                            <input type="hidden" id="convertImg" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row border-top">
+                                        <div class="col-sm-12 col-lg-12"><a href="change_password.html"
+                                                id="changepassword" class="btn btn-info m-t-10">Change Password</a>
+                                        </div>
+                                    </div>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer text-center">
+            <span id="absFooter"> © 2020. 3SD Solutions Pvt. Ltd. All right reserved </span>
+            <a href="https://3sdsolutions.com/" target="_blank">3SD Solutions Pvt</a>.
+        </footer>
+        <script src="public/js/sidebar_menu.js"></script>
+        <script src="public/js/profile.js"></script>
+        <script src="static/assets/css/c3/app.min.js"></script>
+        <script src="static/assets/css/c3/app.init.js"></script>
+        <script src="static/assets/css/c3/perfect-scrollbar.jquery.min.js"></script>
+        <script src="static/assets/js/general.js"></script>
+        <script src="static/assets/js/popper.min.js"></script>
+        <script src="static/assets/js/bootstrap.min.js"></script>
+        <script src="static/assets/js/jquery.slimscroll.min.js"></script>
+        <script src="static/assets/js/select2.min.js"></script>
+        <script src="static/assets/css/c3/d3.min.js"></script>
+        <script src="static/assets/css/c3/c3.min.js"></script>
+        <script src="static/assets/js/moment.min.js"></script>
+        <script src="static/assets/js/bootstrap-datetimepicker.min.js"></script>
+        <script src="static/assets/js/jquery.dataTables.min.js"></script>
+        <script src="static/assets/js/dataTables.bootstrap4.min.js"></script>
+        <script src="static/assets/js/app.js"></script>
+</body>
+
+</html>

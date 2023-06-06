@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+	<meta name="robots" content="noindex, nofollow">
+	<title id="title">3SD Solutions || Employee</title>
+	<link rel="shortcut icon" type="image/x-icon" href="static/assets/img/favicon.png">
+	<link rel="stylesheet" href="static/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="static/assets/css/font-awesome.min.css">
+	<link rel="stylesheet" href="static/assets/css/line-awesome.min.css">
+	<link rel="stylesheet" href="static/assets/css/dataTables.bootstrap4.min.css">
+	<link rel="stylesheet" href="static/assets/css/buttons.dataTables.min.css">
+	<link rel="stylesheet" href="static/assets/css/select2.min.css">
+	<link rel="stylesheet" href="static/assets/css/bootstrap-datetimepicker.min.css">
+	<link rel="stylesheet" href="static/assets/css/style.css">
+	<link rel="stylesheet" href="static/assets/css/general.css">
+	<link rel="stylesheet" href="static/assets/css/jquery.loading-indicator.css">
+	<script src="static/assets/js/jquery-3.2.1.min.js"></script>
+	<script src="static/assets/js/papaparse.min.js"></script>
+</head>
+
+<body class="mini-sidebar" style="visibility: visible;">
+	<div id="loader" class="center"></div>
+	<div class="main-wrapper">
+		<div class="header">
+			<div class="header-left">
+				<a id="toggle_btn" href="javascript:void(0);">
+					<span class="bar-icon">
+						<span></span>
+						<span></span>
+						<span></span></span></a>
+			</div>
+			<div class="page-title-box">
+				<a href="dashboard.html" class="logo"><img src="static/assets/img/logo-transparent.png" style="width: 117px;
+margin-top: -42px;" alt="3SD Solutions" style="margin-top: -30px;width: 93px;"></a>
+			</div>
+			<a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
+			<ul class="nav user-menu">
+				<li class="nav-item dropdown has-arrow main-drop">
+					<a href="javascript:void(0);" class="dropdown-toggle nav-link" data-toggle="dropdown">
+						<span class="user-img" id="proImage"></span>
+						<span id="companyName"></span>
+						<span id="companyEmail"></span>
+					</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="profile.html"><i class="ti-user"></i> My Profile</a>
+						<a class="dropdown-item" href="change_password.html"><i class="ti-settings"></i> Change
+							Password</a>
+						<a class="dropdown-item" href="logout.html"><i class="fa fa-power-off"></i> Logout</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="sidebar" id="sidebar">
+			<div class="sidebar-inner slimscroll">
+				<div id="sidebar-menu" class="sidebar-menu">
+					<nav class="sidebar-nav">
+						<ul id="sidebarnav">
+							<li class="menu-title">
+								<div class="user-pic" id="AdminImg" style="display: none;"></div>
+							</li>
+							<li class="menu-title">
+								<span id="absS"></span>
+							</li>
+							<li class="sidebar-item">
+								<a class="sidebar-link waves-effect waves-dark sidebar-link" href="dashboard.html"
+									aria-expanded="false"><i class="icon-Home"></i><span
+										class="hide-menu">Dashboard</span></a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+		<div class="page-wrapper">
+			<div class="content container-fluid">
+				<div class="page-header">
+					<div class="row align-items-center">
+						<div class="col">
+							<ul class="breadcrumb">
+								<li class="breadcrumb-item"><a href="employeelist.html" id="Emp">Employee</a></li>
+								<li class="breadcrumb-item active" id="EmpList">Employee List</li>
+							</ul>
+						</div>
+						<div class="col-auto float-right ml-auto">
+							<!-- <a class="buttons-copy buttons-html5 btn btn-primary mr-1" data-toggle="modal" data-target="#importCSVFile" id="csvFile" title="Upload CSV File"><i class="fa fa-upload text-light"></i><span class="text-light"> CSV Upload</span></a> -->
+							<a class="buttons-copy buttons-html5 btn btn-primary mr-1" id="csvFile"
+								title="Upload CSV File" href="csv-upload.html"><i
+									class="fa fa-upload text-light"></i><span class="text-light"> CSV Upload</span></a>
+						</div>
+						<div class="col-auto float-right ml-auto">
+							<a href="javascript:void(0);" class="btn add-btn" data-toggle="modal"
+								data-target="#add_employee" onclick="addBtnClick();"><i class="fa fa-plus"></i><span
+									id="addEmployee">Add Employee</span></a>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card mb-0">
+							<div class="card-body">
+								<div role="alert" style="margin-top:5px;" id="messageId">
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									</button>
+								</div>
+								<div class="table-responsive" id="listdata"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="add_employee" class="modal custom-modal fade" role="dialog">
+				<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="Add_Edit"></h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="col-lg-12 col-sm-12 col-pad-0">
+							<div class="alert alert-danger alert-dismissible fade show msg_box align-self-center"
+								role="alert" style="display:none;" id="show_error1"><button type="button" class="close"
+									data-dismiss="alert" aria-label="Close"><span
+										aria-hidden="true">&times;</span></button></div>
+						</div>
+						<div class="modal-body">
+							<div id="errorAlert" class="alert alert-danger" role="alert" style="display:none;"></div>
+							<form>
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-form-label"><span id="add_empId">Employee ID </span><span
+													class="text-danger">*</span></label>
+											<input type="text" class="form-control" id="empid" name="empid"
+												placeholder="Enter (Letter , Number and Underscore)">
+											<input type='hidden' id='empRegId'>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-form-label"><span id="add_name">Employee Name </span><span
+													class="text-danger">*</span></label>
+											<input class="form-control" type="text" id="empname" name="empname"
+												placeholder="Enter Employee Name">
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-form-label"><span id="add_mailId">Email ID </span><span
+													class="text-danger">*</span></label>
+											<input class="form-control" type="email" id="emailid" name="emailid"
+												placeholder="Enter Email ID">
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-form-label"><span id="add_mobNo">Mobile No </span><span
+													class="text-danger">*</span></label>
+											<input class="form-control" type="text" id="mobileNo" name="mobile_no"
+												onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+												maxlength="10" placeholder="Enter Mobile No">
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-form-label" id="Loc">Location <span
+													class="text-danger">*</span></label>
+											<select name="location_id" id="locId" class="select2 form-control"
+												style="width: 100%" onchange="shiftData();"></select>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-form-label" id="Loc">Shift <span
+													class="text-danger">*</span></label>
+											<select name="shift_id" id="shiftId" class="select2 form-control"
+												style="width: 100%"></select>
+										</div>
+									</div>
+								</div>
+								<div class="submit-section" style="margin-top: 0px;">
+									<button type="button" class="btn btn-success" id="btnSubmit"
+										onClick="submitBtnfrm()"></button>
+								</div>
+								<div class="row p-2 border border-warning mt-2" id="deleteEmployeeDetails"
+									style="display:none;position: relative;">
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade" id="importCSVFile" role="dialog">
+				<form method="post" enctype="multipart/form-data" action="">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<a href="static/employee_registration.csv" class="fa fa-download"><span
+										style="font-family: Poppins, sans-serif; font-size:18px" id="downloadCSV">
+										Download Sample CSV </span></a>
+								<button type="button" class="close" data-dismiss="modal">×</button>
+							</div>
+							<div class="modal-body">
+								<div class="card">
+									<div class="card-body">
+										<div class="alert alert-danger" role="alert" id="show_error"
+											style="display:none;">
+										</div>
+										<div align="center">
+											<div class="input-group" style="margin:20px 0 15px 0;">
+												<div class="input-group-prepend">
+													<span class="input-group-text" id="UploadCSV"> Upload</span>
+												</div>
+												<div class="custom-file">
+													<input type="file" class="custom-file-input" id="inputGroupFile01"
+														name="csv_file">
+													<label class="custom-file-label" for="inputGroupFile01"
+														id="CCSVFile"> Choose CSV file...</label>
+												</div>
+											</div>
+											<button type="button" class="btn btn-success waves-effect waves-light"
+												id="csvUpload">Upload</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal fade bd-example-modal-lg" id="importCSV">
+				<div class="modal-dialog modal-dialog-scrollable modal-lg">
+					<div class="modal-content">
+						<!-- Modal Header -->
+						<div class="modal-header">
+							<h1 class="modal-title" id="csvFileUpload">Csv File Data</h1>
+							<button type="button" class="close" data-dismiss="modal" id="closeM">×</button>
+						</div>
+						<!-- Modal body -->
+						<div class="modal-body">
+							<div class="card">
+								<div class="card-body">
+									<div class="table-responsive">
+										<table id="example" class="table table-striped table-bordered display">
+											<thead>
+												<tr>
+													<th align="center" id="empIdCSV">Employee ID</th>
+													<th align="center" id="nameCSV">Name</th>
+													<th align="center" id="mailCSV">Email ID</th>
+													<th align="center" id="mobileCSV">Mobile No</th>
+													<th align="center" id="locationCSV">Location ID</th>
+												</tr>
+											</thead>
+											<tbody id="list_data">
+												<tr class="text-info">
+													<td><input type="hidden" name="empId[]" value=""></td>
+													<td><input type="hidden" name="empName[]" value=""></td>
+													<td><input type="hidden" name="empEmail[]" value=""></td>
+													<td><input type="hidden" name="empMob[]" value=""></td>
+													<td><input type="hidden" name="emplocation[]" value=""></td>
+												</tr>
+											</tbody>
+										</table>
+										<div class="toast-header">
+											<svg class="bd-placeholder-img rounded mr-2" width="20" height="20"
+												xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"
+												focusable="false" role="img">
+												<rect fill="#f62d51" width="100%" height="100%"></rect>
+											</svg>
+											<strong class="mr-auto" id="missingField">either duplicate data or missing
+												any field.</strong>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="existingIdPopUp" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="EInfo">Existing Info : </h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeE"><span
+								aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="col-lg-12 col-sm-12 col-pad-0">
+						<div class="alert alert-danger alert-dismissible fade show msg_box align-self-center"
+							role="alert" style="display:none;" id="sError"><button type="button" class="close"
+								data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						</div>
+					</div>
+					<i class="emp-check" style="display:none;color: #3a7d34;">✔ Employee ID already exists!!</i>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-6">
+								<label id="nameEmp">Name :</label>&nbsp;<span id="nameEmp2"></span>
+							</div>
+							<div class="col-6">
+								<label id="idEmp">Employee ID :</label>&nbsp;<span id="idEmp2"></span>
+							</div>
+							<div class="col-6">
+								<label id="Email">Email ID :</label>&nbsp;<span id="mail2"></span>
+							</div>
+							<div class="col-6">
+								<label id="phno">Mobole No :</label>&nbsp;<span id="phno2"></span>
+							</div>
+						</div>
+						<div class="form-group p-t-20 text-center">
+							<button class="btn btn-primary mr-1" id="active">ACTIVATE</button>
+							<button class="btn-danger btn mr-1" id="permanent">PERMANENTLY DELETE</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /Page Wrapper -->
+	</div>
+	<footer class="footer text-center" id="absFooter">
+		© 2020. 3SD Solutions Pvt. Ltd. All right reserved
+		<a href="https://3sdsolutions.com/" target="_blank">3SD Solutions Pvt</a>.
+	</footer>
+	<script src="static/assets/js/select2.min.js"></script>
+	<script src="public/js/sidebar_menu.js"></script>
+	<script src="public/js/employee.js"></script>
+	<script src="static/assets/js/general.js"></script>
+	<script src="static/assets/js/popper.min.js"></script>
+	<script src="static/assets/js/bootstrap.min.js"></script>
+	<script src="static/assets/js/jquery.slimscroll.min.js"></script>
+	<script src="static/assets/js/moment.min.js"></script>
+	<script src="static/assets/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="static/assets/js/jquery.dataTables.min.js"></script>
+	<script src="static/assets/js/dataTables.bootstrap4.min.js"></script>
+	<script src="static/assets/js/dataTables/dataTables.buttons.min.js"></script>
+	<script src="static/assets/js/dataTables/buttons.flash.min.js"></script>
+	<script src="static/assets/js/dataTables/jszip.min.js"></script>
+	<script src="static/assets/js/dataTables/pdfmake.min.js"></script>
+	<script src="static/assets/js/dataTables/vfs_fonts.js"></script>
+	<script src="static/assets/js/dataTables/buttons.html5.min.js"></script>
+	<script src="static/assets/js/dataTables/buttons.print.min.js"></script>
+	<script src="static/assets/js/dataTables/dataTables.fixedColumns.min.js"></script>
+	<script src="static/assets/js/app.js"></script>
+</body>
+
+</html>

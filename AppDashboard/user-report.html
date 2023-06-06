@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+	<meta name="robots" content="noindex, nofollow">
+	<title id="title">3SD Solutions || User Report</title>
+	<link rel="shortcut icon" type="image/x-icon" href="static/assets/img/favicon.png">
+	<link rel="stylesheet" href="static/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="static/assets/css/font-awesome.min.css">
+	<link rel="stylesheet" href="static/assets/css/line-awesome.min.css">
+	<link rel="stylesheet" href="static/assets/css/dataTables.bootstrap4.min.css">
+	<link rel="stylesheet" href="static/assets/css/buttons.dataTables.min.css">
+	<link rel="stylesheet" href="static/assets/css/select2.min.css">
+	<link rel="stylesheet" href="static/assets/css/bootstrap-datetimepicker.min.css">
+	<link rel="stylesheet" href="static/assets/css/style.css">
+	<link rel="stylesheet" href="static/assets/css/general.css">
+	<link rel="stylesheet" href="static/assets/css/jquery.loading-indicator.css">
+	<script src="static/assets/js/jquery-3.2.1.min.js"></script>
+	<script src="static/assets/js/papaparse.min.js"></script>
+</head>
+
+<body class="mini-sidebar" style="visibility: visible;">
+	<div id="loader" class="center"></div>
+	<div class="main-wrapper">
+		<div class="header">
+			<div class="header-left">
+				<a id="toggle_btn" href="javascript:void(0);">
+					<span class="bar-icon">
+						<span></span>
+						<span></span>
+						<span></span>
+					</span> </a>
+			</div>
+			<div class="page-title-box">
+				<a href="dashboard.html" class="logo"><img src="static/assets/img/logo-transparent.png" style="width: 117px;
+margin-top: -42px;" alt="3SD Solutions" style="margin-top: -30px;width: 93px;"></a>
+			</div>
+			<a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
+			<ul class="nav user-menu">
+				<li class="nav-item dropdown has-arrow main-drop">
+					<a href="javascript:void(0);" class="dropdown-toggle nav-link" data-toggle="dropdown">
+						<span class="user-img" id="proImage"></span>
+						<span id="companyName"></span>
+					</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="logout.html" id="logout">Logout</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="sidebar" id="sidebar">
+			<div class="sidebar-inner slimscroll">
+				<div id="sidebar-menu" class="sidebar-menu">
+					<ul id="sidebarnav">
+						<li class="menu-title">
+							<div class="user-pic" id="AdminImg" style="display: none;"></div>
+						</li>
+						<li class="menu-title">
+							<span id="absS"></span>
+						</li>
+						<li><a href="dashboard.html"><i class="la la-dashboard"></i><span id="dashboard">
+									Dashboard</span></a></li>
+						<li><a href="employee.html"><i class="la la-user"></i> <span>Employee</span></a></li>
+						<li class="submenu">
+							<a href="javascript:void(0);"><i class="la la-file"></i> <span> Reports</span> <span
+									class="menu-arrow"></span></a>
+							<ul style="display: none;">
+								<li><a href="all-active-list.html">All Activity</a></li>
+								<li><a href="daily-report.html">Daily Activity</a></li>
+								<li><a href="user-report.html">User Repoert</a></li>
+							</ul>
+						</li>
+						<li class="submenu">
+							<a href="javascript:void(0);"><i class="la la-cog"></i> <span> Settings</span> <span
+									class="menu-arrow"></span></a>
+							<ul style="display: none;">
+								<li><a href="secretkey.html">Camera</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="page-wrapper">
+			<div class="content container-fluid">
+				<div class="page-header">
+					<div class="row align-items-center">
+						<div class="col">
+							<ul class="breadcrumb">
+								<li class="breadcrumb-item"><a href="javascript:void(0);" id="ReportTitle">Report</a>
+								</li>
+								<li class="breadcrumb-item active" id="ReportList">User Report</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card mb-0">
+							<div class="card-body">
+								<div role="alert" style="margin-top:5px;" id="messageId">
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									</button>
+								</div>
+								<div class="row">
+									<div class="col-md-5"> </div>
+									<div class="col-md-2">
+										<div class="month-filter ">
+											<span id="calendar">
+												<input class="form-control" type="date" name="setDate" id="setdate"
+													placeholder="Enter Date" required />
+												<input type="submit" name="datesubmit" style="display:none"></span>
+										</div>
+									</div>
+								</div>
+								<div class="table-responsive" id="tableData">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal custom-modal fade" id="attendance_info" role="dialog">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="day_activity_title">Day Activity</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="card punch-status">
+								<div class="card-body">
+									<h5 class="card-title">Timesheet <small class="text-muted"
+											id="timesheet_date"></small></h5>
+									<div class="punch-det">
+										<h6>First seen at</h6>
+										<p id="first_seen_at"></p>
+									</div>
+									<div class="punch-info">
+										<div class="punch-hours">
+											<span id="total_hour"></span>
+										</div>
+									</div>
+									<div class="punch-det">
+										<h6>Last seen at</h6>
+										<p id="last_seen_at"></p>
+									</div>
+									<div class="statistics" style="display:none;">
+										<div class="row">
+											<div class="col-md-6 col-6 text-center">
+												<div class="stats-box">
+													<p>Break</p>
+													<h6 id="total_break_hour"></h6>
+												</div>
+											</div>
+											<div class="col-md-6 col-6 text-center">
+												<div class="stats-box">
+													<p>Overtime</p>
+													<h6 id="total_overtime_hour"></h6>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="card recent-activity">
+								<div class="card-body">
+									<h5 class="card-title">Activity</h5>
+									<ul class="res-activity-list" id="all_activity_list">
+										<li>
+											<p class="mb-0"><span class="text-danger">No list found</p>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer class="footer text-center" id="absFooter">
+		© 2020. 3SD Solutions Pvt. Ltd. All right reserved
+		<a href="https://3sdsolutions.com/" target="_blank">3SD Solutions Pvt</a>.
+	</footer>
+	<script src="public/js/user_report.js"></script>
+	<script src="static/assets/js/general.js"></script>
+	<script src="static/assets/js/popper.min.js"></script>
+	<script src="static/assets/js/bootstrap.min.js"></script>
+	<script src="static/assets/js/jquery.slimscroll.min.js"></script>
+	<script src="static/assets/js/select2.min.js"></script>
+	<script src="static/assets/js/moment.min.js"></script>
+	<script src="static/assets/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="static/assets/js/jquery.dataTables.min.js"></script>
+	<script src="static/assets/js/dataTables.bootstrap4.min.js"></script>
+	<script src="static/assets/js/dataTables/dataTables.buttons.min.js"></script>
+	<script src="static/assets/js/dataTables/buttons.flash.min.js"></script>
+	<script src="static/assets/js/dataTables/jszip.min.js"></script>
+	<script src="static/assets/js/dataTables/pdfmake.min.js"></script>
+	<script src="static/assets/js/dataTables/vfs_fonts.js"></script>
+	<script src="static/assets/js/dataTables/buttons.html5.min.js"></script>
+	<script src="static/assets/js/dataTables/buttons.print.min.js"></script>
+	<script src="static/assets/js/dataTables/dataTables.fixedColumns.min.js"></script>
+	<script src="static/assets/js/app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="robots" content="noindex, nofollow">
+    <title id="title">3SD Solutions || Leave Management</title>
+    <link rel="shortcut icon" type="image/x-icon" href="static/assets/img/favicon.png">
+    <link rel="stylesheet" href="static/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="static/assets/css/line-awesome.min.css">
+    <link rel="stylesheet" href="static/assets/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="static/assets/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="static/assets/css/select2.min.css">
+    <link rel="stylesheet" href="static/assets/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="static/assets/css/style.css">
+    <link rel="stylesheet" href="static/assets/css/general.css">
+    <link rel="stylesheet" href="static/assets/css/jquery.loading-indicator.css">
+    <script src="static/assets/js/jquery-3.2.1.min.js"></script>
+    <script src="static/assets/js/papaparse.min.js"></script>
+    <style>
+        .breadcrumb {
+            background-color: #f7f7f7;
+        }
+
+        .btn {
+            margin-top: 7px;
+        }
+    </style>
+</head>
+
+<body class="mini-sidebar" style="visibility: visible;">
+    <div id="loader" class="center"></div>
+    <div class="main-wrapper">
+        <div class="header">
+            <div class="header-left">
+                <a id="toggle_btn" href="javascript:void(0);">
+                    <span class="bar-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span></span></a>
+            </div>
+            <div class="page-title-box">
+                <a href="dashboard.html" class="logo"><img src="static/assets/img/logo-transparent.png" style="width: 117px;
+margin-top: -42px;" alt="3SD Solutions" style="margin-top: -30px;width: 93px;"></a>
+            </div>
+            <a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
+            <ul class="nav user-menu">
+                <li class="nav-item dropdown has-arrow main-drop">
+                    <a href="javascript:void(0);" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                        <span class="user-img" id="proImage"></span>
+                        <span id="companyName"></span>
+                        <span id="companyEmail"></span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="profile.html"><i class="ti-user"></i> My Profile</a>
+                        <a class="dropdown-item" href="change_password.html"><i class="ti-settings"></i> Change
+                            Password</a>
+                        <a class="dropdown-item" href="logout.html"><i class="fa fa-power-off"></i> Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-inner slimscroll">
+                <div id="sidebar-menu" class="sidebar-menu">
+                    <nav class="sidebar-nav">
+                        <ul id="sidebarnav">
+                            <li class="menu-title">
+                                <div class="user-pic" id="AdminImg" style="display: none;"></div>
+                            </li>
+                            <li class="menu-title">
+                                <span id="absS"></span>
+                            </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="dashboard.html"
+                                    aria-expanded="false"><i class="icon-Home"></i><span
+                                        class="hide-menu">Dashboard</span></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a href="leave.html" id="setingId">Settings</a>
+                                    </li>
+                                    <li class="breadcrumb-item active" aria-current="page" id="LeaveList">Leave List
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                        <div class="col-auto float-right ml-auto">
+                            <button type="button" class="btn add-btn" data-toggle="modal" data-target="#myModal"
+                                id="BtnAddId" onclick="addButtonClick();"><i class="fa fa-plus"></i><span id="AddLeave">
+                                    Add Leave</span></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div role="alert" style="margin-top:5px;" id="messageId">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <!--<span aria-hidden="true">&times;</span>-->
+                                    </button>
+                                </div>
+                                <div class="table-responsive" id="leaveBodyId"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="mdMitle"></h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="col-lg-12 col-sm-12 col-pad-0">
+                            <div class="alert alert-danger alert-dismissible fade show msg_box align-self-center"
+                                role="alert" style="display:none;" id="show_error1"><button type="button" class="close"
+                                    data-dismiss="alert" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button></div>
+                        </div>
+                        <div class="modal-body">
+                            <div role="alert" style="margin-top:5px;" id="errormessageId">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                            <form>
+                                <div class="row">
+                                    <div id="form_dt" class="col-6">
+                                        <div class="form-group">
+                                            <label for="leavestartdate" id="LeaveStartDateL">Leave StartDate</label>
+                                            <input type="date" name="leave_start_date" id="StartDate"
+                                                class="form-control" value="" />
+                                        </div>
+                                    </div>
+                                    <div id="to_dt" class="col-6">
+                                        <div class="form-group">
+                                            <label for="leaveenddate" id="LeaveEndDateL">Leave EndDate</label>
+                                            <input type="date" name="leave_end_date" id="EndDate" class="form-control"
+                                                value="" />
+                                        </div>
+                                    </div>
+                                    <div id="singleDt" class="col-6">
+                                        <div class="form-group">
+                                            <label for="dateLeave" id=DateLave">Leave Date</label>
+                                            <input type="date" name="leave_date" id="leaveDate" class="form-control"
+                                                value="" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <input type="hidden" name="location_id" id="location_id">
+                                            <label for="leaveType" id="leaveTypeL">Leave Type</label>
+                                            <select name="leave_type" id="leaveTypeList" class="select2 form-control d1"
+                                                style="width: 100%;">
+                                                <option value="" id="selectLeaveid">Select Leave Type</option>
+                                                <option value="0">Unpaid Leave</option>
+                                                <option value="1">Paid Leave</option>
+                                                <option value="2">Tour</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="location" id="locationfilter">Location</label>
+                                            <select id="locationFilter" name="search_location"
+                                                class="select2 form-control d2" onchange="empChoice()"
+                                                style="width:100%"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="emp" id="EmployeeL">Employee</label>
+                                            <select name="emp_id" id="empList" class="select2 form-control d3"
+                                                style="width: 100%;">
+                                                <option value="">Select Employee</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <label for="leaveType" id="LeavePurposeL">Leave Purpose</label>
+                                <textarea name="leave_purpose" id="LeavePurposeText" class="form-control"
+                                    placeholder="Enter Leave Purpose"></textarea><br>
+                                <input type="hidden" id="empLeaveId">
+                                <div class="form-group m-b-0 text-center">
+                                    <button type="button" class="btn btn-success" id="submitId"
+                                        onclick="SubmitBtn()"></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer text-center"> <span id="absFooter">© 2020. 3SD Solutions Pvt. Ltd. All right reserved</span>
+        <a href="https://3sdsolutions.com/" target="_blank">3SD Solutions Pvt</a>.
+    </footer>
+    <script src="static/assets/js/select2.min.js"></script>
+    <script src="public/js/sidebar_menu.js"></script>
+    <script src="public/js/leave.js"></script>
+    <script src="static/assets/js/general.js"></script>
+    <script src="static/assets/js/popper.min.js"></script>
+    <script src="static/assets/js/bootstrap.min.js"></script>
+    <script src="static/assets/js/jquery.slimscroll.min.js"></script>
+    <script src="static/assets/js/moment.min.js"></script>
+    <script src="static/assets/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="static/assets/js/jquery.dataTables.min.js"></script>
+    <script src="static/assets/js/dataTables.bootstrap4.min.js"></script>
+    <script src="static/assets/js/dataTables.bootstrap4.min.js"></script>
+    <script src="static/assets/js/dataTables/dataTables.buttons.min.js"></script>
+    <script src="static/assets/js/dataTables/buttons.flash.min.js"></script>
+    <script src="static/assets/js/dataTables/jszip.min.js"></script>
+    <script src="static/assets/js/dataTables/pdfmake.min.js"></script>
+    <script src="static/assets/js/dataTables/vfs_fonts.js"></script>
+    <script src="static/assets/js/dataTables/buttons.html5.min.js"></script>
+    <script src="static/assets/js/dataTables/buttons.print.min.js"></script>
+    <script src="static/assets/js/dataTables/dataTables.fixedColumns.min.js"></script>
+    <script src="static/assets/js/app.js"></script>
+</body>
+
+</html>
